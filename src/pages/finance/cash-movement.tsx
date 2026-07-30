@@ -6,6 +6,8 @@ import { getToken } from "../../utils/get-token";
 const CashMovementPage = () => {
   const token = getToken();
   const { data: movements, isLoading } = useCashMovements(token ?? "");
+
+  console.log('EEEEE ', movements)
   return (
     <MainLayout>
       <div className="flex justify-between">

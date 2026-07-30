@@ -24,7 +24,7 @@ const ListDeposit = ({
               Date
             </th>
             <th scope="col" className="px-6 py-4 text-left">
-              Numero
+              Numéro
             </th>
             <th scope="col" className="px-6 py-4 text-left">
               Motif
@@ -37,6 +37,9 @@ const ListDeposit = ({
             </th>
             <th scope="col" className="px-6 py-4 text-left">
               Source
+            </th>
+             <th scope="col" className="px-6 py-4 text-left">
+              Réference
             </th>
             <th scope="col" className="px-6 py-4 text-center">
               Actions
@@ -60,14 +63,31 @@ const ListDeposit = ({
               <td className="whitespace-nowrap px-6 py-2">
                 <span className="font-medium">{depo.description}</span>
               </td>
-              <td className="whitespace-nowrap px-6 py-2">
-                <span className="font-medium">{depo.amount}</span>
+              <td className="whitespace-nowrap px-6 py-2 text-gray-900">
+                <span className="font-semibold">{depo.amount}</span>
               </td>
               <td className="whitespace-nowrap px-6 py-2">
                 <span className="font-medium">{depo.currency}</span>
               </td>
               <td className="whitespace-nowrap px-6 py-2">
-                <span className="font-medium">{depo.source}</span>
+                <span
+                  className={`font-medium rounded py-0.5 px-2 ${
+                    depo.source === "bank"
+                      ? "bg-blue-200 text-blue-500"
+                      : depo.source === "owner"
+                        ? "bg-green-200 text-green-500"
+                        : "bg-gray-300 text-gray-600"
+                  }`}
+                >
+                  {depo.source === "bank"
+                    ? "La banque"
+                    : depo.source === "owner"
+                      ? "Argent personnel"
+                      : "Autre"}
+                </span>
+              </td>
+               <td className="whitespace-nowrap px-6 py-2 text-center">
+                <span className="font-medium">{depo.id}</span>
               </td>
               <td className="whitespace-nowrap px-6 py-2 font-medium flex gap-2 justify-center">
                 <button

@@ -91,3 +91,5 @@ export type Deposit = {
 };
 
 export type ExpenseCategory = { id: number; name: string };
+
+export type Balance = { id: number; currency: string; balance: number };

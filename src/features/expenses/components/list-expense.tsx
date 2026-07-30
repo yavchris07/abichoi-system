@@ -25,7 +25,7 @@ const ListExpense = ({
               Date
             </th>
             <th scope="col" className="px-6 py-4 text-left">
-              Numero
+              Numéro
             </th>
             <th scope="col" className="px-6 py-4 text-left">
               Motif
@@ -37,7 +37,10 @@ const ListExpense = ({
               Devise
             </th>
             <th scope="col" className="px-6 py-4 text-left">
-              Methode de paiement
+              Méthode de paiement
+            </th>
+            <th scope="col" className="px-6 py-4 text-left">
+              Réference
             </th>
             <th scope="col" className="px-6 py-4 text-center">
               Actions
@@ -61,14 +64,31 @@ const ListExpense = ({
               <td className="whitespace-nowrap px-6 py-2">
                 <span className="font-medium">{exp.description}</span>
               </td>
-              <td className="whitespace-nowrap px-6 py-2">
-                <span className="font-medium">{exp.amount}</span>
+              <td className="whitespace-nowrap px-6 py-2 text-gray-900">
+                <span className="font-semibold">{exp.amount}</span>
               </td>
               <td className="whitespace-nowrap px-6 py-2">
                 <span className="font-medium">{exp.currency}</span>
               </td>
               <td className="whitespace-nowrap px-6 py-2">
-                <span className="font-medium">{exp.payment_method}</span>
+                <span
+                  className={`font-medium rounded py-0.5 px-3 ${
+                    exp.payment_method === "bank"
+                      ? "bg-blue-200 text-blue-500"
+                      : exp.payment_method === "cash"
+                        ? "bg-purple-200 text-purple-500"
+                        : "bg-red-200 text-red-500"
+                  }`}
+                >
+                  {exp.payment_method === "bank"
+                    ? "La banque"
+                    : exp.payment_method === "cash"
+                      ? "Cash"
+                      : "Mobile money"}
+                </span>
+              </td>
+              <td className="whitespace-nowrap px-6 py-2 text-center">
+                <span className="font-medium">{exp.id}</span>
               </td>
               <td className="whitespace-nowrap px-6 py-2 font-medium flex gap-2 justify-center">
                 <button

@@ -18,7 +18,6 @@ import { Link, useLocation } from "react-router";
 import { ADMIN, COO, DG, FINANCE, type User } from "../utils/types";
 import { getCurrentUser } from "../utils/get-current-user";
 
-
 const SidebarItems = () => {
   const location = useLocation();
 
@@ -90,20 +89,29 @@ const SidebarItems = () => {
       icon: <LayoutDashboard size={17} />,
     },
     { path: "/sales", name: "Ventes", icon: <BadgeDollarSign size={17} /> },
-    { path: "/expenses", name: "Depense", icon: <ChartNoAxesCombined size={17} /> },
-    { path: "/cash-movements", name: "Journal de caisse", icon: <ArrowLeftRight size={17} /> },
+    {
+      path: "/expenses",
+      name: "Depense",
+      icon: <ChartNoAxesCombined size={17} />,
+    },
+    {
+      path: "/cash-movements",
+      name: "Journal de caisse",
+      icon: <ArrowLeftRight size={17} />,
+    },
     {
       path: "/deposits",
       name: "Approvisionnement",
       icon: <BanknoteArrowDown size={17} />,
     },
-    { path: "/withdrawals", name: "Retrait", icon: <EyeDashed size={17} /> },
     { path: "/reports", name: "Rapports", icon: <ReceiptText size={17} /> },
   ];
 
-{/* <BanknoteArrowDown />
+  {
+    /* <BanknoteArrowDown />
 <ArrowLeftRight />
-<ChartNoAxesCombined /> */}
+<ChartNoAxesCombined /> */
+  }
   const itemsCoo = [
     {
       path: "/dashboard",
