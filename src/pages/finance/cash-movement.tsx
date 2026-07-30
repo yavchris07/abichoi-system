@@ -4,7 +4,7 @@ import { useCashMovements } from "../../features/cash-movements/hooks/use-cash-m
 import { getToken } from "../../utils/get-token";
 
 const CashMovementPage = () => {
-    const token = getToken()
+  const token = getToken();
   const { data: movements, isLoading } = useCashMovements(token ?? "");
   return (
     <MainLayout>

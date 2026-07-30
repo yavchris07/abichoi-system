@@ -26,9 +26,9 @@ const ListCashMovement = ({cashMovements, loading}:cashMovementsProps) => {
             <th scope="col" className="px-6 py-4 text-left">
               Beneficiaire
             </th>
-            <th scope="col" className="px-6 py-4 text-left">
+            {/* <th scope="col" className="px-6 py-4 text-left">
               Catégorie
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-4 text-left">
               Numéro
             </th>

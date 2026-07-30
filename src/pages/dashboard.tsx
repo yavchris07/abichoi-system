@@ -1,6 +1,11 @@
 import MainLayout from "../components/main-layout";
+import { useCashBalances } from "../features/cash-balances/hooks/use-cash-balances";
+import { getToken } from "../utils/get-token";
 
 const DashboardPage = () => {
+  const token = getToken();
+  const { data: balances } = useCashBalances(token);
+  console.log("CAISSE : ", balances);
   return (
     <MainLayout>
       <div className="flex justify-between">
@@ -9,14 +14,14 @@ const DashboardPage = () => {
         </h3>
       </div>
       <div className="flex gap-2">
-        <div className="border border-gray-100 py-10 px-6 shadow rounded">
-          <div>Caisse dollars</div>
-         <strong>700 USD</strong>
-        </div>
-        <div className="border border-gray-100 py-10 px-6 shadow rounded">
-          <div className="text-gray-500">Caisse Francs</div>
-          <strong>111.700 CDF</strong>
-        </div>
+        {balances.map((bal) => (
+          <div className="border border-gray-100 py-10 px-6 shadow rounded">
+            <div>Caisse dollars</div>
+            <strong>
+              {bal.balance} {bal.cuurency}
+            </strong>
+          </div>
+        ))}
       </div>
     </MainLayout>
   );

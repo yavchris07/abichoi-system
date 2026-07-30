@@ -7,6 +7,7 @@ import CashMovementPage from "../pages/finance/cash-movement";
 // import CashRegisterPage from "../pages/finance/cash-register";
 import DepositPage from "../pages/finance/deposit";
 import ExpensePage from "../pages/finance/expense";
+import ReportPage from "../pages/finance/reports";
 import SalePage from "../pages/finance/sale";
 import WithdrawalPage from "../pages/finance/withdrawal";
 import LoginPage from "../pages/login-page";
@@ -61,5 +62,9 @@ export const routers: Router[] = [
   {
     path: "/settings",
     element: <SettingPage />,
+  },
+  {
+    path: "/reports",
+    element: <ReportPage />
   },
 ];

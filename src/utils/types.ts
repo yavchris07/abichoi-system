@@ -65,6 +65,29 @@ export type CashMovement = {
   voucher_number: string;
   beneficiary: string;
   description: string;
-  user_id: string;
-  created_at:string
+  created_at: string;
 };
+
+export type Expense = {
+  id: number;
+  expense_number: string;
+  category_id: number;
+  beneficiary: string;
+  amount: number;
+  currency: string;
+  payment_method: string;
+  description: string;
+  created_at?: string;
+};
+
+export type Deposit = {
+  id: number;
+  deposit_number: string;
+  source: string;
+  amount: number;
+  currency: string;
+  description: string;
+  created_at?: string;
+};
+
+export type ExpenseCategory = { id: number; name: string };

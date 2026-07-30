@@ -1,4 +1,3 @@
-"use client";
 import { getToken } from "@/utils/get-token";
 import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
