@@ -90,6 +90,17 @@ export type Deposit = {
   created_at?: string;
 };
 
+export type Withdrawal = {
+  id: number;
+  withdrawal_number: string;
+  beneficiary: string;
+  reason: string;
+  user_id: number;
+  amount: number;
+  currency: string;
+  created_at?: string;
+}
+
 export type ExpenseCategory = { id: number; name: string };
 
 export type Balance = { id: number; currency: string; balance: number };

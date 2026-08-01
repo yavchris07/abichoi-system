@@ -2,34 +2,35 @@ import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useToast } from "../../../components/customer-toast";
 import Modal from "../../../components/modal";
-import { useEditDeposit } from "../hooks/use-edit-deposit";
-import type { Deposit } from "../../../utils/types";
+import { getCurrentUser } from "../../../utils/get-current-user";
+import { useCreatewithdrawal } from "../hooks/use-create-withdrawal";
 
-type editDepositProps = {
+type createWithdrawalProps = {
   open: string;
   onClose: () => void;
   token: string;
-  deposit: Deposit;
 };
 
-const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
-  const { editDeposit, fail, pending } = useEditDeposit(token ?? "");
-
+const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
   const { showToast } = useToast();
+  const user = getCurrentUser();
   const [formData, setFormData] = useState({
-    id: deposit.id,
-    deposit_number: deposit.deposit_number,
-    source: deposit.source,
-    amount: deposit.amount,
-    currency: deposit.currency,
-    description: deposit.description,
+    id: 0,
+    withdrawal_number: "",
+    amount: 0,
+    currency: "",
+    beneficiary: "",
+    reason: "",
+    user_id: user.id,
   });
+
+  const {create,fail,pending} = useCreatewithdrawal(token ?? "");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await editDeposit(formData);
-      showToast("Edition reussie !", "success");
+      await create(formData);
+      showToast("Création reussie !", "success");
       onClose();
     } catch (e) {
       if (e instanceof Error) {
@@ -42,48 +43,38 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
     }
   };
 
-  const sources = [
-    { id: "owner", name: "Argent personnel" },
-    { id: "bank", name: "Par la banque" },
-    { id: "other", name: "Autre" },
-  ];
-
   const devises = [
     { id: "USD", name: "USD" },
     { id: "CDF", name: "CDF" },
   ];
 
-  const handleSourceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, source: event.target.value });
-  };
 
   const handleDeviseChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, currency: event.target.value });
   };
 
   if (!open) return null;
-
   return (
     <Modal>
       <div className="flex justify-between items-center my-2">
-        <h2 className="text-black font-semibold">Editer Dépot</h2>
+        <h2 className="text-black font-semibold">Création Retrait</h2>
         <span onClick={onClose} className="text-gray-600 cursor-pointer">
           x
         </span>
       </div>
       <p className="text-gray-500 text-xs font-medium my-3">
-        Faites un dépot pour alimenter la caisse.
+        Les retraits sont conditionnés par une jistification.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-0">
         <div className="w-full my-1">
           <label className="text-gray-900 text-xs font-semibold">ID</label>
           <input
             type="text"
-            value={formData.deposit_number}
+            value={formData.withdrawal_number}
             onChange={(e) =>
-              setFormData({ ...formData, deposit_number: e.target.value })
+              setFormData({ ...formData, withdrawal_number: e.target.value })
             }
-            placeholder="Expense num"
+            placeholder="Withdrawal num"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
           />
         </div>
@@ -91,9 +82,9 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
           <label className="text-gray-900 text-xs font-semibold">Motif</label>
           <input
             type="text"
-            value={formData.description}
+            value={formData.reason}
             onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
+              setFormData({ ...formData, reason: e.target.value })
             }
             placeholder="Motif"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
@@ -116,7 +107,6 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
           <select
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
             onChange={handleDeviseChange}
-            value={formData.currency}
           >
             <option value="">-- Devise --</option>
             {devises.map((user) => (
@@ -126,22 +116,19 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
             ))}
           </select>
         </div>
-
         <div className="w-full my-1">
-          <label className="text-gray-900 text-xs font-semibold">Source</label>
-          <select
+          <label className="text-gray-900 text-xs font-semibold">Bénéficiaire</label>
+          <input
+            type="text"
+            value={formData.beneficiary}
+            onChange={(e) =>
+              setFormData({ ...formData, beneficiary: e.target.value })
+            }
+            placeholder="Bénéficiaire"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
-            onChange={handleSourceChange}
-            value={formData.source}
-          >
-            <option value="">-- Source d'argents --</option>
-            {sources.map((meth) => (
-              <option key={meth.id} value={meth.id}>
-                {meth.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
+
         <div className="flex justify-end gap-2 my-2">
           <span
             className="hover:bg-gray-100 border border-gray-300 text-gray-900 text-xs py-2 px-6 rounded font-semibold cursor-pointer"
@@ -157,7 +144,7 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
             {pending ? (
               <Loader2 className="animate-spin" size={14} />
             ) : (
-              "Modifier"
+              "Retirer"
             )}
           </button>
         </div>
@@ -166,4 +153,4 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
   );
 };
 
-export default EditDeposit;
+export default CreateWithdrawal;

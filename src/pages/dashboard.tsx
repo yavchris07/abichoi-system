@@ -6,8 +6,11 @@ import type { Balance } from "../utils/types";
 
 const DashboardPage = () => {
   const token = getToken();
-  const { data: balances } = useCashBalances(token ?? '');
-  console.log("CAISSE : ", balances);
+  const { data: balances, isLoading } = useCashBalances(token ?? "");
+
+  const sold: Balance[] =
+    balances?.filter((bal: Balance) => bal.balance > 0) || [];
+  console.log("CAISSE : ", sold);
 
   return (
     <MainLayout>
@@ -17,16 +20,21 @@ const DashboardPage = () => {
         </h3>
       </div>
       <div className="flex gap-2">
-        {balances.map((bal:Balance) => (
-          <div className="border border-gray-100 py-10 px-6 shadow rounded">
-            <div>
-              Caisse {bal.currency === "USD" ? "Dollards" : "Francs congolais"}
+        {isLoading ? (
+          <p>Chargement...</p>
+        ) : (
+          sold.map((bal: Balance) => (
+            <div className="border border-gray-100 py-10 px-6 shadow rounded" key={bal.id}>
+              <div>
+                Caisse{" "}
+                {bal.currency === "USD" ? "Dollards" : "Francs congolais"}
+              </div>
+              <strong>
+                {bal.balance} {bal.currency}
+              </strong>
             </div>
-            <strong>
-              {bal.balance} {bal.currency}
-            </strong>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </MainLayout>
   );

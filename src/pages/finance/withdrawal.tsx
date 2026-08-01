@@ -1,36 +1,34 @@
 import { useState } from "react";
 import MainLayout from "../../components/main-layout";
-import { useDeposits } from "../../features/cash-deposits/hooks/use-deposits";
 import { getToken } from "../../utils/get-token";
-import type { Deposit } from "../../utils/types";
+import type { Withdrawal } from "../../utils/types";
 import { Plus } from "lucide-react";
-import ListDeposit from "../../features/cash-deposits/components/list-deposit";
-import CreateDeposit from "../../features/cash-deposits/components/create-deposit";
-import EditDeposit from "../../features/cash-deposits/components/edit-deposit";
-import DeleteDeposit from "../../features/cash-deposits/components/delete-deposit";
+import ListWithdrawals from "../../features/withdrawal/components/list-withdrawals";
+import { useWithdrawals } from "../../features/withdrawal/hooks/use-withdrawals";
+import CreateWithdrawal from "../../features/withdrawal/components/create-withdrawal";
+import EditWithdrawal from "../../features/withdrawal/components/edit-withdrawal";
+import DeleteWithdrawal from "../../features/withdrawal/components/delete-withdrwal";
 
-const DepositPage = () => {
+const WithdrawalPage = () => {
   const token = getToken();
-  const { data: deposits, isLoading } = useDeposits(token);
+  const { data: withdrawals, isLoading } = useWithdrawals(token);
 
   const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
-  const [selectedItem, setSelectedItem] = useState<Deposit | null>(null);
+  const [selectedItem, setSelectedItem] = useState<Withdrawal | null>(null);
 
-  const handleEdit = (depo: Deposit) => {
-    setSelectedItem(depo);
+  const handleEdit = (withdrawal: Withdrawal) => {
+    setSelectedItem(withdrawal);
     setModal("edit");
   };
-  const handleDelete = (depo: Deposit) => {
-    setSelectedItem(depo);
+  const handleDelete = (withdrawal: Withdrawal) => {
+    setSelectedItem(withdrawal);
     setModal("delete");
   };
-
-  console.log('==== ',deposits)
   return (
     <MainLayout>
       <div className="flex justify-between">
         <h3 className="text-gray-900 font-bold text-sm items-center">
-          <span className="text-gray-500">Tableau de bord / </span> depots
+          <span className="text-gray-500">Tableau de bord / </span> Retraits
         </h3>
         <span
           className="bg-amber-500 px-1 py-1 text-black text-xs font-semibold cursor-pointer rounded-full"
@@ -40,15 +38,15 @@ const DepositPage = () => {
         </span>
       </div>
 
-      <ListDeposit
-        deposits={deposits}
+      <ListWithdrawals
+        withdrawals={withdrawals}
         loading={isLoading}
         onDelete={handleDelete}
         onEdit={handleEdit}
       />
 
       {modal === "open" && (
-        <CreateDeposit
+        <CreateWithdrawal
           onClose={() => setModal(null)}
           open={modal}
           token={token}
@@ -56,8 +54,8 @@ const DepositPage = () => {
       )}
 
       {modal === "edit" && selectedItem && (
-        <EditDeposit
-          deposit={selectedItem}
+        <EditWithdrawal
+          withdrawal={selectedItem}
           onClose={() => setModal(null)}
           open={modal}
           token={token}
@@ -65,8 +63,8 @@ const DepositPage = () => {
       )}
 
       {modal === "delete" && selectedItem && (
-        <DeleteDeposit
-          deposit={selectedItem}
+        <DeleteWithdrawal
+          withdrawal={selectedItem}
           onClose={() => setModal(null)}
           open={modal}
           token={token}
@@ -76,4 +74,4 @@ const DepositPage = () => {
   );
 };
 
-export default DepositPage;
+export default WithdrawalPage;

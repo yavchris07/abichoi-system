@@ -39,9 +39,9 @@ const Sidebar = () => {
             </p>
             <p className="text-gray-600 text-sm">{role}</p>
             <p className="text-blue-600 text-sm">{user?.email}</p>
-            <p className="text-gray-500 text-sm">
+            {/* <p className="text-gray-500 text-sm">
               {isMounted ? user?.phone : "Numero invalide"}
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

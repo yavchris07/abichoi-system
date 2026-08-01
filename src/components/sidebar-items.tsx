@@ -4,6 +4,7 @@ import {
   ArrowLeftRight,
   BadgeDollarSign,
   BanknoteArrowDown,
+  BanknoteArrowUp,
   ChartNoAxesCombined,
   EyeDashed,
   LayoutDashboard,
@@ -103,6 +104,11 @@ const SidebarItems = () => {
       path: "/deposits",
       name: "Approvisionnement",
       icon: <BanknoteArrowDown size={17} />,
+    },
+    {
+      path: "/withdrawals",
+      name: "Retraits",
+      icon: <BanknoteArrowUp size={17} />,
     },
     { path: "/reports", name: "Rapports", icon: <ReceiptText size={17} /> },
   ];

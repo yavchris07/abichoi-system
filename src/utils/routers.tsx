@@ -9,6 +9,7 @@ import DepositPage from "../pages/finance/deposit";
 import ExpensePage from "../pages/finance/expense";
 import ReportPage from "../pages/finance/reports";
 import SalePage from "../pages/finance/sale";
+import WithdrawalPage from "../pages/finance/withdrawal";
 import LoginPage from "../pages/login-page";
 import SettingPage from "../pages/setting";
 import type { Router } from "./types";
@@ -57,6 +58,10 @@ export const routers: Router[] = [
   {
     path: "/settings",
     element: <SettingPage />,
+  },
+  {
+    path: "/withdrawals",
+    element: <WithdrawalPage />,
   },
   {
     path: "/reports",
