@@ -60,7 +60,7 @@ export type CashMovement = {
   reference_id: number;
   movement_type: string;
   amount: number;
-  currency: number;
+  currency: string;
   piece_number: string;
   voucher_number: string;
   beneficiary: string;

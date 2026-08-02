@@ -73,7 +73,15 @@ const ListCashMovement = ({ cashMovements, loading }: cashMovementsProps) => {
                 </span>
               </td>
               <td className="whitespace-nowrap px-6 py-2 font-medium">
-                <span>{sm.reference_type}</span>
+                <span>
+                  {sm.reference_type === "deposit"
+                    ? "Approvisionnement caisse"
+                    : sm.reference_type === "withdrawal"
+                      ? "Retrait"
+                      : sm.reference_type === "expense"
+                        ? "Dépense"
+                        : "Vente"}
+                </span>
               </td>
               <td className="whitespace-nowrap px-6 py-2 font-medium text-gray-900">
                 <div className="flex items-center gap-2">

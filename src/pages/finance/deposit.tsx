@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import MainLayout from "../../components/main-layout";
 import { useDeposits } from "../../features/cash-deposits/hooks/use-deposits";
 import { getToken } from "../../utils/get-token";
 import type { Deposit } from "../../utils/types";
-import { Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import ListDeposit from "../../features/cash-deposits/components/list-deposit";
 import CreateDeposit from "../../features/cash-deposits/components/create-deposit";
 import EditDeposit from "../../features/cash-deposits/components/edit-deposit";
 import DeleteDeposit from "../../features/cash-deposits/components/delete-deposit";
+import { deviseItems } from "../../utils/devise-items";
+import DepositPdf from "../../components/pdf/deposit-pdf";
 
 const DepositPage = () => {
   const token = getToken();
@@ -25,7 +27,44 @@ const DepositPage = () => {
     setModal("delete");
   };
 
-  console.log('==== ',deposits)
+  // Filter deposits based on the selected date range
+  const [dateFilter, setDateFilter] = useState("");
+  const [currencyFilter, setCurrencyFilter] = useState("");
+
+  const filteredItems = useMemo(() => {
+    // Aucun filtre → on retourne directement la liste complète
+    const list = deposits ?? [];
+    if (!dateFilter && !currencyFilter) {
+      return list;
+    }
+
+    return list.filter((deposit: Deposit) => {
+      const matchDate =
+        !dateFilter || deposit.created_at.split(" ")[0] === dateFilter;
+      //  !dateFilter || deposit.created_at.split(" ")[0] === dateFilter;
+      const matchCurrency =
+        !currencyFilter || deposit.currency === currencyFilter;
+
+      return matchDate && matchCurrency;
+    });
+  }, [deposits, dateFilter, currencyFilter]);
+
+  // pagination
+  const ITEMS_PER_PAGE = 20;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [dateFilter, currencyFilter]);
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredItems.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredItems, currentPage]);
+
+  console.log("==== rrrrrrr", filteredItems);
+  console.log("XXXX ==== ", deposits);
   return (
     <MainLayout>
       <div className="flex justify-between">
@@ -40,12 +79,69 @@ const DepositPage = () => {
         </span>
       </div>
 
+      <div className="flex justify-between items-center my-6">
+        <DepositPdf data={filteredItems} />
+        <div className="flex gap-2">
+          <input
+            type="date"
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            className="border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
+          />
+          <select
+            value={currencyFilter}
+            onChange={(e) => setCurrencyFilter(e.target.value)}
+            className="border border-gray-300 rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
+          >
+            <option value="">Toutes les devises</option>
+            {deviseItems.map((devise) => (
+              <option key={devise.id} value={devise.id}>
+                {devise.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <ListDeposit
-        deposits={deposits}
+        deposits={paginatedItems}
         loading={isLoading}
         onDelete={handleDelete}
         onEdit={handleEdit}
       />
+
+      {/* page */}
+      {deposits && deposits.length > ITEMS_PER_PAGE && (
+        <div className="flex justify-end items-center gap-2 mt-6">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => p - 1)}
+            className="border px-2 py-1 rounded disabled:opacity-50"
+          >
+            <ArrowLeft size={13} />
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === i + 1 ? "bg-amber-500 text-white" : "border"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((p) => p + 1)}
+            className="border px-2 py-1 rounded disabled:opacity-50"
+          >
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      )}
 
       {modal === "open" && (
         <CreateDeposit
