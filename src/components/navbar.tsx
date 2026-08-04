@@ -1,6 +1,6 @@
 import { LogOut } from "lucide-react";;
 import React from "react";
-// import logo from '/public/icon.png'
+import logo from '../assets/icon.png'
 import { useNavigate } from "react-router";
 import { getToken } from "../utils/get-token";
 import { useLogout } from "../features/auth/hooks/use-logout";
@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="w-[97%] mx-auto">
         <div className="flex items-center justify-between">
           <div className="menu-left flex gap-1">
-            <img src='/public/icon.png' alt="logo-abichoi" width={30} height={20}/>
+            <img src={logo} alt="logo-abichoi" width={30} height={20}/>
             <a
               href="/dashboard"
               className="text-xl font-bold text-gray-900"
