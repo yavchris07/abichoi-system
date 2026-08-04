@@ -97,7 +97,6 @@ export type Withdrawal = {
   withdrawal_number: string;
   beneficiary: string;
   reason: string;
-  user_id: number;
   amount: number;
   currency: string;
   created_at: string;

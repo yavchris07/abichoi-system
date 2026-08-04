@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useToast } from "../../../components/customer-toast";
 import Modal from "../../../components/modal";
-import { getCurrentUser } from "../../../utils/get-current-user";
 import { useCreatewithdrawal } from "../hooks/use-create-withdrawal";
 
 type createWithdrawalProps = {
@@ -13,7 +12,6 @@ type createWithdrawalProps = {
 
 const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
   const { showToast } = useToast();
-  const user = getCurrentUser();
   const [formData, setFormData] = useState({
     id: 0,
     withdrawal_number: "",
@@ -21,7 +19,7 @@ const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
     currency: "",
     beneficiary: "",
     reason: "",
-    user_id: user.id,
+    created_at:""
   });
 
   const {create,fail,pending} = useCreatewithdrawal(token ?? "");

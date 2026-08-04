@@ -21,6 +21,7 @@ const CreateDeposit = ({ onClose, open, token }: createDepositProps) => {
     amount: 0,
     currency: "",
     description: "",
+    created_at:""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -146,7 +146,7 @@ const DepositPage = () => {
       {modal === "open" && (
         <CreateDeposit
           onClose={() => setModal(null)}
-          open={modal}
+          open='open'
           token={token}
         />
       )}

@@ -140,7 +140,7 @@ const WithdrawalPage = () => {
       {modal === "open" && (
         <CreateWithdrawal
           onClose={() => setModal(null)}
-          open={modal}
+          open='open'
           token={token}
         />
       )}

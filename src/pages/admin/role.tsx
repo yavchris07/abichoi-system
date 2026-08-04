@@ -10,7 +10,7 @@ import { getToken } from "../../utils/get-token";
 import type { Role } from "../../utils/types";
 
 const RolePage = () => {
-  const [modal, setModal] = useState<"edit" | "delete" | "open" |null>(null);
+  const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
   const [selectedItem, setSelectedItem] = useState<Role | null>(null);
   const token = getToken();
   const { data: roles, isLoading } = useRoles(token ?? "");
@@ -24,6 +24,7 @@ const RolePage = () => {
     setSelectedItem(role);
     setModal("delete");
   };
+
   return (
     <MainLayout>
       <div className="flex justify-between">
@@ -32,7 +33,7 @@ const RolePage = () => {
         </h3>
         <span
           className="bg-amber-500 px-1 py-1 text-black text-xs font-semibold cursor-pointer rounded-full"
-          onClick={() => setModal('open')}
+          onClick={() => setModal("open")}
         >
           <Plus />
         </span>
@@ -44,7 +45,11 @@ const RolePage = () => {
         onEdit={handleEdit}
         roles={roles}
       />
-      <CreateRole onClose={() => setModal('open')} open={modal} />
+
+      {modal === "open" && (
+        <CreateRole onClose={() => setModal(null)} open="open" />
+      )}
+
       {modal === "edit" && selectedItem && (
         <EditRole
           onClose={() => setModal(null)}
@@ -52,6 +57,7 @@ const RolePage = () => {
           role={selectedItem}
         />
       )}
+
       {modal === "delete" && selectedItem && (
         <DeleteRole
           onClose={() => setModal(null)}
