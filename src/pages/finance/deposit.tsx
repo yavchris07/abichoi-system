@@ -13,7 +13,7 @@ import DepositPdf from "../../components/pdf/deposit-pdf";
 
 const DepositPage = () => {
   const token = getToken();
-  const { data: deposits, isLoading } = useDeposits(token);
+  const { data: deposits, isLoading } = useDeposits(token ?? '');
   const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
   const [selectedItem, setSelectedItem] = useState<Deposit | null>(null);
 
@@ -143,7 +143,7 @@ const DepositPage = () => {
         <CreateDeposit
           onClose={() => setModal(null)}
           open='open'
-          token={token}
+          token={token ?? ''}
         />
       )}
 
@@ -152,7 +152,7 @@ const DepositPage = () => {
           deposit={selectedItem}
           onClose={() => setModal(null)}
           open='edit'
-          token={token}
+          token={token ?? ''}
         />
       )}
 
@@ -161,7 +161,7 @@ const DepositPage = () => {
           deposit={selectedItem}
           onClose={() => setModal(null)}
           open='delete'
-          token={token}
+          token={token ?? ''}
         />
       )}
     </MainLayout>

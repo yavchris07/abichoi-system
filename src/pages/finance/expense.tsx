@@ -12,7 +12,7 @@ import ExpensePdf from "../../components/pdf/expense-pdf";
 
 const ExpensePage = () => {
   const token = getToken();
-  const { data: expenses, isLoading } = useExpenses(token);
+  const { data: expenses, isLoading } = useExpenses(token ?? '');
   const { data } = useExpenseCategories(token);
 
   const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);

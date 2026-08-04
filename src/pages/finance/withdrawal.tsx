@@ -141,7 +141,7 @@ const WithdrawalPage = () => {
         <CreateWithdrawal
           onClose={() => setModal(null)}
           open='open'
-          token={token}
+          token={token ?? ''}
         />
       )}
 
@@ -150,7 +150,7 @@ const WithdrawalPage = () => {
           withdrawal={selectedItem}
           onClose={() => setModal(null)}
           open='edit'
-          token={token}
+          token={token ?? ""}
         />
       )}
 
@@ -159,7 +159,7 @@ const WithdrawalPage = () => {
           withdrawal={selectedItem}
           onClose={() => setModal(null)}
           open='delete'
-          token={token}
+          token={token ?? ''}
         />
       )}
     </MainLayout>
