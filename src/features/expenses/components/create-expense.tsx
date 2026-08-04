@@ -32,6 +32,7 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
     currency: "",
     payment_method: "",
     description: "",
+    created_at:"",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

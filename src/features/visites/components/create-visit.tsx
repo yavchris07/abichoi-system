@@ -1,19 +1,18 @@
-import { getToken } from "@/utils/get-token";
 import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { useToast } from "@/components/customer-toast";
-import Modal from "@/components/modal";
-import { User } from "@/utils/types";
 import { useCreateVisit } from "../hooks/use-create-visit";
+import type { User } from "../../../utils/types";
+import { useToast } from "../../../components/customer-toast";
+import Modal from "../../../components/modal";
 
 type createVisitProps = {
   open: boolean;
   onClose: () => void;
   users: User[];
+  token: string
 };
 
-const CreateVisit = ({ onClose, open, users }: createVisitProps) => {
-  const token = getToken();
+const CreateVisit = ({ onClose, open, users,token }: createVisitProps) => {
   const { create, fail, pending } = useCreateVisit(token ?? "");
 
   const { showToast } = useToast();

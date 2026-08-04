@@ -46,7 +46,7 @@ export const expenseApi = {
     return res.json();
   },
 
-  delete: async (token: string, id: string) => {
+  delete: async (token: string, id: number) => {
     const res = await fetch(`${API_URL}/expense/delete`, {
       method: "DELETE",
       headers: {

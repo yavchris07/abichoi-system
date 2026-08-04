@@ -52,7 +52,9 @@ const WithdrawalPdf = ({ data }: dataSets) => {
         }
 
         return [
-          new Date(item.created_at).toLocaleDateString(),
+          item.created_at
+            ? new Date(item.created_at).toLocaleDateString()
+            : "-",
           item.withdrawal_number,
           item.reason,
           item.beneficiary,

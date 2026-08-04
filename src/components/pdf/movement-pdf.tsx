@@ -61,7 +61,9 @@ const MovementPdf = ({ data }: dataSets) => {
         }
 
         return [
-          new Date(item.created_at).toLocaleDateString(),
+          item.created_at
+            ? new Date(item.created_at).toLocaleDateString()
+            : "-",
           item.piece_number,
           item.description,
           item.movement_type === "in" ? "Entrée" : "Sortie",

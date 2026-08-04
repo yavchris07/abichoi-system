@@ -1,40 +1,31 @@
-import React from 'react'
-
-const DeleteExpense = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default DeleteExpense
-
-
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "../../../components/customer-toast";
 import Modal from "../../../components/modal";
-import { getToken } from "../../../utils/get-token";
-import type { Role } from "../../../utils/types";
-import { useDeleteRole } from "../hooks/use-delete-role";
+import type { Expense } from "../../../utils/types";
+import { useDeleteExpense } from "../hooks/use-delete-expense";
 
-type modalProps = {
+type deleteExpenseProps = {
   open: string;
   onClose: () => void;
-  role: Role;
+  expense: Expense;
+  token: string;
 };
 
-const DeleteRole = ({ role, open, onClose }: modalProps) => {
-  const token = getToken();
-  const {  deleteRole, fail, pending } = useDeleteRole(token ?? "");
+const DeleteExpense = ({
+  onClose,
+  open,
+  expense,
+  token,
+}: deleteExpenseProps) => {
+  const { deleteExpense, fail, pending } = useDeleteExpense(token ?? "");
   const { showToast } = useToast();
   const [formData, setFormData] = useState({ id: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await deleteRole(role.id);
+      await deleteExpense(expense.id);
       showToast("Suppression role reussie !", "success");
       onClose();
     } catch (e) {
@@ -53,15 +44,15 @@ const DeleteRole = ({ role, open, onClose }: modalProps) => {
   return (
     <Modal>
       <div className="flex justify-between items-center my-2">
-        <h2 className="text-black font-semibold">Suppression utilisateur</h2>
+        <h2 className="text-black font-semibold">Suppression depense</h2>
         <span onClick={onClose} className="text-gray-600 cursor-pointer">
           x
         </span>
       </div>
       <form onSubmit={handleSubmit}>
         <p className="text-gray-500 text-sm">
-          Voullez-vous vraiment supprimer ce role{" "}
-          <strong className="text-black">{role.name}</strong>, le role gere le space de travail du systeme abichoi : {" "} ?
+          Voulez-vous vraiment supprimer cette depense de
+          <strong className="text-black">{expense.beneficiary}</strong> ?
         </p>
 
         <input
@@ -69,6 +60,7 @@ const DeleteRole = ({ role, open, onClose }: modalProps) => {
           value={formData.id}
           onChange={(e) => setFormData({ ...formData, id: e.target.value })}
           placeholder="id"
+          className="hidden"
         />
 
         <div className="flex justify-end gap-2 my-2">
@@ -95,5 +87,4 @@ const DeleteRole = ({ role, open, onClose }: modalProps) => {
   );
 };
 
-export default DeleteRole;
-
+export default DeleteExpense;

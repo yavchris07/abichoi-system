@@ -1,5 +1,4 @@
 import { CaptionsOff } from "lucide-react";
-import React from "react";
 
 type EmptyListProps = {
   message?: string;

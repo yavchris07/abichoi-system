@@ -39,18 +39,6 @@ const DepositPdf = ({ data }: dataSets) => {
 
       const head = [["Date", "Numéro", "Motif", "Source", "Montant", "Solde"]];
 
-      // const body = data.map((item) => [
-      //   new Date(item.created_at).toLocaleDateString(),
-      //   item.deposit_number,
-      //   item.description,
-      //   item.source === "bank"
-      //     ? "La banque"
-      //     : item.source === "owner"
-      //       ? "Argent personnel"
-      //       : "Autre",
-      //   item.amount + " " + (item.currency === "USD" ? "$" : "FC"),
-      // ]);
-
       let usdBalance = 0;
       let cdfBalance = 0;
 
@@ -62,7 +50,9 @@ const DepositPdf = ({ data }: dataSets) => {
         }
 
         return [
-          new Date(item.created_at).toLocaleDateString(),
+          item.created_at
+            ? new Date(item.created_at).toLocaleDateString()
+            : "-",
           item.deposit_number,
           item.description,
           item.source === "bank"
@@ -77,14 +67,6 @@ const DepositPdf = ({ data }: dataSets) => {
         ];
       });
 
-      // colors
-      // const COLORS = {
-      //   gold: [212, 175, 55], // Or
-      //   dark: [40, 40, 40], // Noir
-      //   light: [248, 248, 248], // Gris très clair
-      //   border: [210, 210, 210], // Bordure
-      //   text: [70, 70, 70], // Texte
-      // };
       const COLORS = {
         gold: [212, 175, 55] as [number, number, number],
         dark: [40, 40, 40] as [number, number, number],
@@ -132,22 +114,10 @@ const DepositPdf = ({ data }: dataSets) => {
         },
       });
 
-      // autoTable(doc, {
-      //   startY: 75,
-      //   head: head,
-      //   body: body,
-      //   styles: { fontSize: 10 },
-      //   headStyles: { fillColor: [220, 220, 220] },
-      // });
-
-      // const total = data.reduce((sum, d) => sum + Number(d.montant), 0);
       const lastAutoTable = (doc as JsPDFWithAutoTable).lastAutoTable;
       const finalY = (lastAutoTable?.finalY ?? 75) + 20;
 
-      // new
-
       doc.setFont("helvetica", "bold");
-      // doc.text("Résumé des totaux :", 60, finalY);
 
       autoTable(doc, {
         startY: finalY + 10,
@@ -192,41 +162,3 @@ const DepositPdf = ({ data }: dataSets) => {
 };
 
 export default DepositPdf;
-
-// const AhadiPaidReport = ({ data }: dataSets) => {
-//   const church = localStorage.getItem("eglise");
-
-//   // console.log("DATA : ", data);
-
-//   // const dataWithSolde = data.reduce(
-//   //   (acc, d, index) => {
-//   //     const previousSolde = index === 0 ? 0 : acc[index - 1].solde;
-
-//   //     const montantIn = d.type_payement === "in" ? d.montant : 0;
-//   //     const montantOut = d.type_payement === "out" ? d.montant : 0;
-
-//   //     acc.push({
-//   //       ...d,
-//   //       solde: previousSolde + montantIn - montantOut,
-//   //     });
-
-//   //     return acc;
-//   //   },
-//   //   [] as Array<(typeof data)[0] & { solde: number }>,
-//   // );
-
-//   return (
-//     <div className="download">
-//       {}
-//       <button
-//         onClick={generateAhadiPaidReportPDF}
-//         className="btn"
-//         title="Exporter en PDF"
-//       >
-//         <DownloadCloud />
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default AhadiPaidReport;

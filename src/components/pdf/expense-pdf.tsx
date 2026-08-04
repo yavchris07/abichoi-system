@@ -60,7 +60,9 @@ const ExpensePdf = ({ data }: dataSets) => {
         }
 
         return [
-          new Date(item.created_at).toLocaleDateString(),
+          item.created_at
+            ? new Date(item.created_at).toLocaleDateString()
+            : "-",
           item.expense_number,
           item.description,
           item.beneficiary,

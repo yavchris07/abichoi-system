@@ -35,3 +35,4 @@ export const useDeleteUser = (token:string) => {
 
   return {deleteUser, pending, fail };
 };
+

@@ -1,6 +1,6 @@
-import Loading from "@/components/loading";
-import { Visitor } from "@/utils/types";
 import { Eye } from "lucide-react";
+import Loading from "../../../components/loading";
+import type { Visitor } from "../../../utils/types";
 
 interface visitorProps {
   visitors: Visitor[];

@@ -1,31 +1,25 @@
-
-import { useState } from "react";
-import { expenseApi } from "../api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Expense } from "../../../utils/types";
+import { expenseApi } from "../api";
 
 export const useCreateExpense = (token: string) => {
-  const [pending, setPending] = useState(false);
-  const [fail, setFail] = useState("");
+  const queryClient = useQueryClient();
 
-  const create = async (data: Expense) => {
-    if (pending) return;
-    try {
-      setPending(true);
-      setFail("");
-      const response = await expenseApi.create(data, token);
-      return response;
-    } catch (error) {
-      if (error instanceof Error) {
-        setFail(error.message);
-      } else {
-        setFail("Une erreur inconnue est survenue");
-      }
+  const mutation = useMutation({
+    mutationFn: (data: Expense) => expenseApi.create(data, token),
 
-      throw error;
-    } finally {
-      setPending(false);
-    }
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["expenses"],
+      });
+    },
+  });
+
+  return {
+    create: mutation.mutateAsync,
+    pending: mutation.isPending,
+    fail: mutation.error instanceof Error ? mutation.error.message : "",
+    data: mutation.data,
+    reset: mutation.reset,
   };
-
-  return { create, pending, fail };
 };

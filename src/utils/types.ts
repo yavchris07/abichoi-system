@@ -78,7 +78,7 @@ export type Expense = {
   currency: string;
   payment_method: string;
   description: string;
-  created_at?: string;
+  created_at: string;
 };
 
 export type Deposit = {
@@ -89,7 +89,7 @@ export type Deposit = {
   amount: number;
   currency: string;
   description: string;
-  created_at?: string;
+  created_at: string;
 };
 
 export type Withdrawal = {
@@ -100,7 +100,7 @@ export type Withdrawal = {
   user_id: number;
   amount: number;
   currency: string;
-  created_at?: string;
+  created_at: string;
 };
 
 export type ExpenseCategory = { id: number; name: string };

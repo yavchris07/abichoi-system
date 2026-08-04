@@ -1,4 +1,4 @@
-import { Visitor } from "@/utils/types";
+import type { Visitor } from "../../../utils/types";
 
 type visitListCardProps = {
   visites: Visitor[];
