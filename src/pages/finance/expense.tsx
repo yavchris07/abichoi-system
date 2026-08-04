@@ -173,7 +173,7 @@ const ExpensePage = () => {
         <CreateExpense
           categories={data}
           onClose={() => setModal(null)}
-          open={modal}
+          open='open'
         />
       )}
 

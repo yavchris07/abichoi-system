@@ -13,7 +13,7 @@ import WithdrawalPdf from "../../components/pdf/withdrawal-pdf";
 
 const WithdrawalPage = () => {
   const token = getToken();
-  const { data: withdrawals, isLoading } = useWithdrawals(token);
+  const { data: withdrawals, isLoading } = useWithdrawals(token ?? '');
 
   const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
   const [selectedItem, setSelectedItem] = useState<Withdrawal | null>(null);
@@ -149,7 +149,7 @@ const WithdrawalPage = () => {
         <EditWithdrawal
           withdrawal={selectedItem}
           onClose={() => setModal(null)}
-          open={modal}
+          open='edit'
           token={token}
         />
       )}
@@ -158,7 +158,7 @@ const WithdrawalPage = () => {
         <DeleteWithdrawal
           withdrawal={selectedItem}
           onClose={() => setModal(null)}
-          open={modal}
+          open='delete'
           token={token}
         />
       )}

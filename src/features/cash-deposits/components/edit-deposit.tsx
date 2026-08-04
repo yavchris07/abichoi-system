@@ -23,6 +23,7 @@ const EditDeposit = ({ onClose, open, token, deposit }: editDepositProps) => {
     amount: deposit.amount,
     currency: deposit.currency,
     description: deposit.description,
+    created_at: deposit.created_at,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

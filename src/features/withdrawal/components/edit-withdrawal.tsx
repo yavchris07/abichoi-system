@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useToast } from "../../../components/customer-toast";
 import Modal from "../../../components/modal";
-import { getCurrentUser } from "../../../utils/get-current-user";
 import type { Withdrawal } from "../../../utils/types";
 import { useEditwithdrawal } from "../hooks/use-edit-withdrawal";
 
@@ -20,7 +19,6 @@ const EditWithdrawal = ({
   withdrawal,
 }: editWithdrawalProps) => {
   const { showToast } = useToast();
-  const user = getCurrentUser();
   const [formData, setFormData] = useState({
     id: withdrawal.id,
     withdrawal_number: withdrawal.withdrawal_number,
@@ -28,7 +26,7 @@ const EditWithdrawal = ({
     currency: withdrawal.currency,
     beneficiary: withdrawal.beneficiary,
     reason: withdrawal.reason,
-    user_id: user.id,
+    created_at: withdrawal.created_at,
   });
 
   const { editwithdrawal, fail, pending } = useEditwithdrawal(token ?? "");

@@ -14,7 +14,6 @@ import DepositPdf from "../../components/pdf/deposit-pdf";
 const DepositPage = () => {
   const token = getToken();
   const { data: deposits, isLoading } = useDeposits(token);
-
   const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
   const [selectedItem, setSelectedItem] = useState<Deposit | null>(null);
 
@@ -53,9 +52,6 @@ const DepositPage = () => {
   const ITEMS_PER_PAGE = 20;
   const [currentPage, setCurrentPage] = useState(1);
 
-  // useEffect(() => {
-  //   setCurrentPage(1);
-  // }, [dateFilter, currencyFilter]);
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
 
   const paginatedItems = useMemo(() => {
@@ -155,7 +151,7 @@ const DepositPage = () => {
         <EditDeposit
           deposit={selectedItem}
           onClose={() => setModal(null)}
-          open={modal}
+          open='edit'
           token={token}
         />
       )}
@@ -164,7 +160,7 @@ const DepositPage = () => {
         <DeleteDeposit
           deposit={selectedItem}
           onClose={() => setModal(null)}
-          open={modal}
+          open='delete'
           token={token}
         />
       )}
