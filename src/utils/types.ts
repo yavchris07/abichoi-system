@@ -71,6 +71,7 @@ export type CashMovement = {
 export type Expense = {
   id: number;
   expense_number: string;
+  voucher_number: string;
   category_id: number;
   beneficiary: string;
   amount: number;
@@ -83,6 +84,7 @@ export type Expense = {
 export type Deposit = {
   id: number;
   deposit_number: string;
+  // voucher_number:string,
   source: string;
   amount: number;
   currency: string;
@@ -99,7 +101,7 @@ export type Withdrawal = {
   amount: number;
   currency: string;
   created_at?: string;
-}
+};
 
 export type ExpenseCategory = { id: number; name: string };
 

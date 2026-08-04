@@ -84,7 +84,7 @@ const CashMovementPage = () => {
       </div>
       <ListCashMovement cashMovements={paginatedItems} loading={isLoading} />
       {/* page */}
-      <div className="flex justify-end items-center gap-2 mt-6">
+      <div className="flex justify-end items-center gap-2 mt-4">
         <button
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((p) => p - 1)}

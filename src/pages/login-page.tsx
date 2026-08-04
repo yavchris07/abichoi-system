@@ -12,7 +12,6 @@ const LoginPage = () => {
           <p className="text-amber-600 text-sm italic">Tout est tracé</p>
         </div>
         <Login />
-      {/* </div> */}
     </div>
   );
 };

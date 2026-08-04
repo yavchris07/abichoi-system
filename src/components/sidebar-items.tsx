@@ -9,7 +9,6 @@ import {
   EyeDashed,
   LayoutDashboard,
   MonitorCloud,
-  ReceiptText,
   SettingsIcon,
   ShieldPlus,
   User as UserIcon,
@@ -110,7 +109,7 @@ const SidebarItems = () => {
       name: "Retraits",
       icon: <BanknoteArrowUp size={17} />,
     },
-    { path: "/reports", name: "Rapports", icon: <ReceiptText size={17} /> },
+    // { path: "/reports", name: "Rapports", icon: <ReceiptText size={17} /> },
   ];
 
   {

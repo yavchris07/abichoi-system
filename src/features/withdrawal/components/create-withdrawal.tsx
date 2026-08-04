@@ -66,7 +66,7 @@ const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
         Les retraits sont conditionnés par une jistification.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-0">
-        <div className="w-full my-1">
+        <div className="w-full my-1 hidden">
           <label className="text-gray-900 text-xs font-semibold">ID</label>
           <input
             type="text"

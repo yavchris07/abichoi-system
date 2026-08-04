@@ -22,8 +22,9 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
 
   const { showToast } = useToast();
   const [formData, setFormData] = useState({
-    id:0,
+    id: 0,
     expense_number: "",
+    voucher_number: "",
     category_id: 0,
     user_id: user.id,
     beneficiary: "",
@@ -60,7 +61,6 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
     { id: "CDF", name: "CDF" },
   ];
 
-
   const handleMethodeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, payment_method: event.target.value });
   };
@@ -86,18 +86,18 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
         </span>
       </div>
       <p className="text-gray-500 text-xs font-medium my-3">
-        Faite une depense.
+        Faite une dépense.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-0">
         <div className="w-full my-1">
-          <label className="text-gray-900 text-xs font-semibold">ID</label>
+          <label className="text-gray-900 text-xs font-semibold">Numéro pièce</label>
           <input
             type="text"
-            value={formData.expense_number}
+            value={formData.voucher_number}
             onChange={(e) =>
-              setFormData({ ...formData, expense_number: e.target.value })
+              setFormData({ ...formData, voucher_number: e.target.value })
             }
-            placeholder="Expense num"
+            placeholder="Numéro pièce"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
           />
         </div>
@@ -164,7 +164,7 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
             onChange={handleCategoryChange}
           >
-            <option value="">-- Type depense --</option>
+            <option value="">-- Type dépense --</option>
             {categories.map((ct) => (
               <option key={ct.id} value={ct.id}>
                 {ct.name}

@@ -38,9 +38,9 @@ const ListDeposit = ({
             <th scope="col" className="px-6 py-4 text-left">
               Source
             </th>
-             <th scope="col" className="px-6 py-4 text-left">
+            {/* <th scope="col" className="px-6 py-4 text-left">
               Réference
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-4 text-center">
               Actions
             </th>
@@ -86,9 +86,9 @@ const ListDeposit = ({
                       : "Autre"}
                 </span>
               </td>
-               <td className="whitespace-nowrap px-6 py-2 text-center">
+              {/* <td className="whitespace-nowrap px-6 py-2 text-center">
                 <span className="font-medium">{depo.id}</span>
-              </td>
+              </td> */}
               <td className="whitespace-nowrap px-6 py-2 font-medium flex gap-2 justify-center">
                 <button
                   onClick={() => onEdit(depo)}
