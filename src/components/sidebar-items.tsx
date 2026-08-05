@@ -74,6 +74,11 @@ const SidebarItems = () => {
       name: "Tableau de bord",
       icon: <LayoutDashboard size={17} />,
     },
+    {
+      path: "/cash-movements",
+      name: "Journal de caisse",
+      icon: <ArrowLeftRight size={17} />,
+    },
     { path: "/visitors", name: "Visites", icon: <EyeDashed size={17} /> },
     {
       path: "/settings",
@@ -122,6 +127,11 @@ const SidebarItems = () => {
       path: "/dashboard",
       name: "Tableau de bord",
       icon: <LayoutDashboard size={17} />,
+    },
+    {
+      path: "/cash-movements",
+      name: "Journal de caisse",
+      icon: <ArrowLeftRight size={17} />,
     },
     { path: "/visitors", name: "Visites", icon: <EyeDashed size={17} /> },
     {

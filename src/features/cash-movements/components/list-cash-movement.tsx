@@ -5,9 +5,14 @@ import type { CashMovement } from "../../../utils/types";
 interface cashMovementsProps {
   cashMovements: CashMovement[];
   loading: boolean;
+  role: string;
 }
 
-const ListCashMovement = ({ cashMovements, loading }: cashMovementsProps) => {
+const ListCashMovement = ({
+  cashMovements,
+  loading,
+  role,
+}: cashMovementsProps) => {
   if (loading) return <Loading />;
   return (
     <div className="w-full bg-gray-100 my-2">
@@ -38,9 +43,11 @@ const ListCashMovement = ({ cashMovements, loading }: cashMovementsProps) => {
             <th scope="col" className="px-6 py-4 text-left">
               Montant
             </th>
-            <th scope="col" className="px-6 py-4 text-center">
-              Actions
-            </th>
+            {role === "cfo" ? (
+              <th scope="col" className="px-6 py-4 text-center">
+                Actions
+              </th>
+            ) : null}
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-gray-600 text-xs">
@@ -95,21 +102,23 @@ const ListCashMovement = ({ cashMovements, loading }: cashMovementsProps) => {
                   </span>
                 </div>
               </td>
-              <td className="whitespace-nowrap px-6 py-2 font-medium flex gap-2 justify-center">
-                <button
-                  //   onClick={() => onEdit(role)}
-                  className=" hover:bg-gray-100 cursor-pointer"
-                >
-                  <Pencil size={16} />
-                </button>
+              {role === "cfo" ? (
+                <td className="whitespace-nowrap px-6 py-2 font-medium flex gap-2 justify-center">
+                  <button
+                    //   onClick={() => onEdit(role)}
+                    className=" hover:bg-gray-100 cursor-pointer"
+                  >
+                    <Pencil size={16} />
+                  </button>
 
-                <button
-                  //   onClick={() => onDelete(role)}
-                  className=" text-red-600 hover:bg-red-50 cursor-pointer"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </td>
+                  <button
+                    //   onClick={() => onDelete(role)}
+                    className=" text-red-600 hover:bg-red-50 cursor-pointer"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </td>
+              ) : null}
             </tr>
           ))}
         </tbody>

@@ -7,9 +7,11 @@ import { getToken } from "../../utils/get-token";
 import type { CashMovement } from "../../utils/types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import MovementPdf from "../../components/pdf/movement-pdf";
+import { getCurrentUser } from "../../utils/get-current-user";
 
 const CashMovementPage = () => {
   const token = getToken();
+  const user = getCurrentUser();
   const { data: movements, isLoading } = useCashMovements(token ?? "");
 
   // Filter deposits based on the selected date range
@@ -82,37 +84,43 @@ const CashMovementPage = () => {
           </select>
         </div>
       </div>
-      <ListCashMovement cashMovements={paginatedItems} loading={isLoading} />
+      <ListCashMovement
+        cashMovements={paginatedItems}
+        loading={isLoading}
+        role={user.role ?? ""}
+      />
       {/* page */}
-      <div className="flex justify-end items-center gap-2 mt-4">
-        <button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((p) => p - 1)}
-          className="border px-2 py-1 rounded disabled:opacity-50"
-        >
-          <ArrowLeft size={13} />
-        </button>
-
-        {Array.from({ length: totalPages }, (_, i) => (
+      {filteredItems.length > ITEMS_PER_PAGE && (
+        <div className="flex justify-end items-center gap-2 mt-4">
           <button
-            key={i}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 rounded ${
-              currentPage === i + 1 ? "bg-amber-500 text-white" : "border"
-            }`}
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => p - 1)}
+            className="border px-2 py-1 rounded disabled:opacity-50"
           >
-            {i + 1}
+            <ArrowLeft size={13} />
           </button>
-        ))}
 
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((p) => p + 1)}
-          className="border px-2 py-1 rounded disabled:opacity-50"
-        >
-          <ArrowRight size={13} />
-        </button>
-      </div>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === i + 1 ? "bg-amber-500 text-white" : "border"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((p) => p + 1)}
+            className="border px-2 py-1 rounded disabled:opacity-50"
+          >
+            <ArrowRight size={13} />
+          </button>
+        </div>
+      )}
     </MainLayout>
   );
 };

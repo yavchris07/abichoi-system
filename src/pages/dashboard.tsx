@@ -1,4 +1,5 @@
 import MainLayout from "../components/main-layout";
+import PwaButton from "../components/pwa-button";
 import { useCashBalances } from "../features/cash-balances/hooks/use-cash-balances";
 import { getToken } from "../utils/get-token";
 import type { Balance } from "../utils/types";
@@ -24,7 +25,10 @@ const DashboardPage = () => {
           <p>Chargement...</p>
         ) : (
           sold.map((bal: Balance) => (
-            <div className="border border-gray-100 py-10 px-6 shadow rounded" key={bal.id}>
+            <div
+              className="border border-gray-100 py-10 px-6 shadow rounded"
+              key={bal.id}
+            >
               <div>
                 Caisse{" "}
                 {bal.currency === "USD" ? "Dollards" : "Francs congolais"}
@@ -36,6 +40,7 @@ const DashboardPage = () => {
           ))
         )}
       </div>
+      <PwaButton />
     </MainLayout>
   );
 };
