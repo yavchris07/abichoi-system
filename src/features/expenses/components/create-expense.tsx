@@ -32,7 +32,7 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
     currency: "",
     payment_method: "",
     description: "",
-    created_at:"",
+    created_at: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -91,7 +91,9 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-0">
         <div className="w-full my-1">
-          <label className="text-gray-900 text-xs font-semibold">Numéro pièce</label>
+          <label className="text-gray-900 text-xs font-semibold">
+            Numéro pièce
+          </label>
           <input
             type="text"
             value={formData.voucher_number}
@@ -99,6 +101,20 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
               setFormData({ ...formData, voucher_number: e.target.value })
             }
             placeholder="Numéro pièce"
+            className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
+          />
+        </div>
+        <div className="w-full my-1">
+          <label className="text-gray-900 text-xs font-semibold">
+            bénéficiaire
+          </label>
+          <input
+            type="text"
+            value={formData.beneficiary}
+            onChange={(e) =>
+              setFormData({ ...formData, beneficiary: e.target.value })
+            }
+            placeholder="bénéficiaire"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
           />
         </div>
@@ -174,16 +190,13 @@ const CreateExpense = ({ onClose, open, categories }: createExpenseProps) => {
           </select>
         </div>
         <div className="w-full my-1">
-          <label className="text-gray-900 text-xs font-semibold">
-            bénéficiaire
-          </label>
+          <label className="text-gray-900 text-xs font-semibold">La date</label>
           <input
-            type="text"
-            value={formData.beneficiary}
+            type="date"
+            value={formData.created_at}
             onChange={(e) =>
-              setFormData({ ...formData, beneficiary: e.target.value })
+              setFormData({ ...formData, created_at: e.target.value })
             }
-            placeholder="bénéficiaire"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
           />
         </div>

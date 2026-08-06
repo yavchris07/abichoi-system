@@ -21,7 +21,7 @@ const CreateDeposit = ({ onClose, open, token }: createDepositProps) => {
     amount: 0,
     currency: "",
     description: "",
-    created_at:""
+    created_at: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -138,6 +138,18 @@ const CreateDeposit = ({ onClose, open, token }: createDepositProps) => {
             ))}
           </select>
         </div>
+        <div className="w-full my-1">
+          <label className="text-gray-900 text-xs font-semibold">Date</label>
+          <input
+            type="date"
+            value={formData.created_at}
+            onChange={(e) =>
+              setFormData({ ...formData, created_at: e.target.value })
+            }
+            placeholder="Montant"
+            className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
+          />
+        </div>
         <div className="flex justify-end gap-2 my-2">
           <span
             className="hover:bg-gray-100 border border-gray-300 text-gray-900 text-xs py-2 px-6 rounded font-semibold cursor-pointer"
@@ -150,7 +162,11 @@ const CreateDeposit = ({ onClose, open, token }: createDepositProps) => {
             className="bg-amber-500 text-black text-xs py-2 px-6 rounded cursor-pointer font-semibold flex justify-center"
             disabled={pending}
           >
-            {pending ? <Loader2 className="animate-spin" size={14} /> : "Déposer"}
+            {pending ? (
+              <Loader2 className="animate-spin" size={14} />
+            ) : (
+              "Déposer"
+            )}
           </button>
         </div>
       </form>

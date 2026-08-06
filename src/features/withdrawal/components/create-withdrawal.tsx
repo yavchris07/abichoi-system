@@ -19,10 +19,10 @@ const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
     currency: "",
     beneficiary: "",
     reason: "",
-    created_at:""
+    created_at: "",
   });
 
-  const {create,fail,pending} = useCreatewithdrawal(token ?? "");
+  const { create, fail, pending } = useCreatewithdrawal(token ?? "");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,12 +46,12 @@ const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
     { id: "CDF", name: "CDF" },
   ];
 
-
   const handleDeviseChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, currency: event.target.value });
   };
 
   if (!open) return null;
+
   return (
     <Modal>
       <div className="flex justify-between items-center my-2">
@@ -73,6 +73,20 @@ const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
               setFormData({ ...formData, withdrawal_number: e.target.value })
             }
             placeholder="Withdrawal num"
+            className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
+          />
+        </div>
+        <div className="w-full my-1">
+          <label className="text-gray-900 text-xs font-semibold">
+            Bénéficiaire
+          </label>
+          <input
+            type="text"
+            value={formData.beneficiary}
+            onChange={(e) =>
+              setFormData({ ...formData, beneficiary: e.target.value })
+            }
+            placeholder="Bénéficiaire"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
           />
         </div>
@@ -114,19 +128,17 @@ const CreateWithdrawal = ({ open, onClose, token }: createWithdrawalProps) => {
             ))}
           </select>
         </div>
-        <div className="w-full my-1">
-          <label className="text-gray-900 text-xs font-semibold">Bénéficiaire</label>
+          <div className="w-full my-1">
+          <label className="text-gray-900 text-xs font-semibold">Date</label>
           <input
-            type="text"
-            value={formData.beneficiary}
+            type="date"
+            value={formData.created_at}
             onChange={(e) =>
-              setFormData({ ...formData, beneficiary: e.target.value })
+              setFormData({ ...formData, created_at: e.target.value })
             }
-            placeholder="Bénéficiaire"
             className="border border-gray-400 text-black py-2 pl-2 rounded text-sm w-full"
           />
         </div>
-
         <div className="flex justify-end gap-2 my-2">
           <span
             className="hover:bg-gray-100 border border-gray-300 text-gray-900 text-xs py-2 px-6 rounded font-semibold cursor-pointer"

@@ -1,6 +1,5 @@
 import Login from "../features/auth/components/login";
 import logo from '../assets/icon.png'
-import PwaButton from "../components/pwa-button";
 
 const LoginPage = () => {
   return (
@@ -11,7 +10,6 @@ const LoginPage = () => {
           <h1 className="mt-10">Notre boison votre choix</h1>
           <p className="text-sm text-gray-400 italic">Abichoi system, reservé aux employés engagés chez ABICHOI SARL. </p>
           <p className="text-amber-600 text-sm italic">Tout est tracé</p>
-          <PwaButton/>
         </div>
         <Login />
     </div>

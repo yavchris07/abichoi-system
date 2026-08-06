@@ -1,3 +1,4 @@
+import { Download } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const PwaButton = () => {
@@ -53,7 +54,7 @@ const PwaButton = () => {
         borderRadius: "5px",
       }}
     >
-      Installer l'application
+      <Download/>
     </button>
   );
 };

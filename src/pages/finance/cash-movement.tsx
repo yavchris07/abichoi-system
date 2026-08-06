@@ -39,7 +39,7 @@ const CashMovementPage = () => {
   }, [movements, dateFilter, currencyFilter]);
 
   // pagination
-  const ITEMS_PER_PAGE = 20;
+  const ITEMS_PER_PAGE = 19;
   const [currentPage, setCurrentPage] = useState(1);
 
   // useEffect(() => {

@@ -50,7 +50,7 @@ const ExpensePage = () => {
   }, [expenses, dateFilter, currencyFilter]);
 
   // pagination
-  const ITEMS_PER_PAGE = 20;
+  const ITEMS_PER_PAGE = 19;
   const [currentPage, setCurrentPage] = useState(1);
 
   // useEffect(() => {
@@ -130,7 +130,7 @@ const ExpensePage = () => {
       </div>
 
       <ListExpense
-        expenses={filteredItems}
+        expenses={paginatedItems}
         loading={isLoading}
         onDelete={handleDelete}
         onEdit={handleEdit}

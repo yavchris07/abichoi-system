@@ -1,5 +1,4 @@
 import MainLayout from "../components/main-layout";
-import PwaButton from "../components/pwa-button";
 import { useCashBalances } from "../features/cash-balances/hooks/use-cash-balances";
 import { getToken } from "../utils/get-token";
 import type { Balance } from "../utils/types";
@@ -40,9 +39,10 @@ const DashboardPage = () => {
           ))
         )}
       </div>
-      <PwaButton />
     </MainLayout>
   );
 };
 
 export default DashboardPage;
+
+
