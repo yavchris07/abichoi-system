@@ -105,3 +105,16 @@ export type Withdrawal = {
 export type ExpenseCategory = { id: number; name: string };
 
 export type Balance = { id: number; currency: string; balance: number };
+
+export type Audit = {
+  id: string;
+  user_id: string;
+  action: string;
+  entity_type: string;
+  entity_id: string;
+  old_values: string;
+  new_values: string;
+  ip_address: string;
+  user_agent: string;
+  created_at: string;
+};

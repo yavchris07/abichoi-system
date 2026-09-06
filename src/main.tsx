@@ -5,6 +5,10 @@ import App from './App.tsx';
 import { AppProvider } from './utils/providers.tsx';
 import { registerSW } from "virtual:pwa-register";
 // import { registerSW } from "virtual:pwa-register";
+import "@fontsource/outfit/400.css";
+import "@fontsource/outfit/500.css";
+import "@fontsource/outfit/600.css";
+import "@fontsource/outfit/700.css";
 
 const updateSW = registerSW({
   onNeedRefresh() {

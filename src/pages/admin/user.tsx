@@ -42,7 +42,7 @@ const UserPage = () => {
           className="bg-amber-500 px-1 py-1 text-black text-xs font-semibold cursor-pointer rounded-full"
           onClick={() => setModal('open')}
         >
-          <Plus />
+          <Plus size={18}/>
         </span>
       </div>
       <UsersList

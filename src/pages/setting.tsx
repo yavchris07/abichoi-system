@@ -1,5 +1,6 @@
 import MainLayout from "../components/main-layout"
 import PwaButton from "../components/pwa-button"
+import AdminSettingsPage from "./admin/admin-settinf"
 
 const SettingPage = () => {
   return (
@@ -9,6 +10,7 @@ const SettingPage = () => {
           <span className="text-gray-500">Parametres </span>
         </h3>
       </div>
+      <AdminSettingsPage />
       <PwaButton/>
       </MainLayout>
   )
