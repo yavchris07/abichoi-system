@@ -144,13 +144,13 @@ import type { CashMovement } from "../../../utils/types";
 interface CashMovementsProps {
   cashMovements: CashMovement[];
   loading: boolean;
-  role: string;
+  // role: string;
 }
 
 const ListCashMovement = ({
   cashMovements,
   loading,
-  role,
+  // role,
 }: CashMovementsProps) => {
   if (loading) {
     return <Loading />;

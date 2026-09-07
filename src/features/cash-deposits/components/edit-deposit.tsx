@@ -60,6 +60,7 @@ const EditDeposit = ({
   useEffect(() => {
     if (!deposit) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFormData({
       id: deposit.id,
       deposit_number: deposit.deposit_number,

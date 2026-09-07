@@ -1,13 +1,13 @@
 
 import { useState } from "react";
 import { cashDepositApi } from "../api";
-import type { Deposit } from "../../../utils/types";
+import type { DepositPayload } from "../../../utils/types";
 
 export const useCreateDeposit = (token: string) => {
   const [pending, setPending] = useState(false);
   const [fail, setFail] = useState("");
 
-  const create = async (data: Deposit) => {
+  const create = async (data: DepositPayload) => {
     if (pending) return;
     try {
       setPending(true);

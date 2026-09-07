@@ -9,22 +9,27 @@ import CreateExpense from "../../features/expenses/components/create-expense";
 import { useExpenseCategories } from "../../features/expense-category/hooks/use-cash-category";
 import { deviseItems } from "../../utils/devise-items";
 import ExpensePdf from "../../components/pdf/expense-pdf";
+import EditExpense from "../../features/expenses/components/edit-expense";
+import DeleteExpense from "../../features/expenses/components/delete-expense";
 
 const ExpensePage = () => {
   const token = getToken();
-  const { data: expenses, isLoading } = useExpenses(token ?? '');
+  const { data: expenses, isLoading } = useExpenses(token ?? "");
   const { data } = useExpenseCategories(token ?? "");
 
-  const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
+  const [open, setOpen] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [deletemodal, setDeleteModal] = useState(false);
+  // const [modal, setModal] = useState<"edit" | "delete"| null>(null);
   const [selectedItem, setSelectedItem] = useState<Expense | null>(null);
 
   const handleEdit = (exp: Expense) => {
     setSelectedItem(exp);
-    setModal("edit");
+    setEditModal(true);
   };
   const handleDelete = (exp: Expense) => {
     setSelectedItem(exp);
-    setModal("delete");
+    setDeleteModal(true);
   };
 
   // Filter deposits based on the selected date range
@@ -50,7 +55,7 @@ const ExpensePage = () => {
   }, [expenses, dateFilter, currencyFilter]);
 
   // pagination
-  const ITEMS_PER_PAGE = 19;
+  const ITEMS_PER_PAGE = 14;
   const [currentPage, setCurrentPage] = useState(1);
 
   // useEffect(() => {
@@ -99,14 +104,14 @@ const ExpensePage = () => {
         </h3>
         <span
           className="bg-amber-500 px-1 py-1 text-black text-xs font-semibold cursor-pointer rounded-full"
-          onClick={() => setModal("open")}
+          onClick={() => setOpen(true)}
         >
           <Plus size={17} />
         </span>
       </div>
 
       <div className="flex justify-between items-center my-6">
-         <ExpensePdf data={filteredItems} />
+        <ExpensePdf data={filteredItems} />
         <div className="flex gap-2">
           <input
             type="date"
@@ -169,16 +174,31 @@ const ExpensePage = () => {
         </div>
       )}
 
-      {modal === "open" && (
+      {open && (
         <CreateExpense
           categories={data}
-          onClose={() => setModal(null)}
-          open='open'
+          onClose={() => setOpen(false)}
+          open={open}
         />
       )}
 
-      {modal === "edit" && selectedItem && <>TTT</>}
-      {modal === "delete" && selectedItem && <>TTT</>}
+      {editModal && selectedItem && (
+        <EditExpense
+          categories={data}
+          expense={selectedItem}
+          onClose={() => setEditModal(false)}
+          open={editModal}
+          token={token ?? ""}
+        />
+      )}
+      {deletemodal && selectedItem && (
+        <DeleteExpense
+          expense={selectedItem}
+          onClose={() => setDeleteModal(false)}
+          open={deletemodal}
+          token={token ?? ""}
+        />
+      )}
     </MainLayout>
   );
 };

@@ -1,122 +1,3 @@
-// import { Pencil, Trash2 } from "lucide-react";
-// import Loading from "../../../components/loading";
-// import type { Expense } from "../../../utils/types";
-
-// interface listExpenseProps {
-//   expenses: Expense[];
-//   loading: boolean;
-//   onDelete: (user: Expense) => void;
-//   onEdit: (user: Expense) => void;
-// }
-
-// const ListExpense = ({
-//   loading,
-//   onDelete,
-//   onEdit,
-//   expenses,
-// }: listExpenseProps) => {
-//   if (loading) return <Loading />;
-//   return (
-//     <div className="w-full bg-gray-100 my-2">
-//       <table className="text-black w-full">
-//         <thead className="bg-gray-50 text-xs font-bold tracking-wider text-gray-700 text-start">
-//           <tr>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Date
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Numéro
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Motif
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Montant
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Devise
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Méthode de paiement
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-left">
-//               Réference
-//             </th>
-//             <th scope="col" className="px-6 py-4 text-center">
-//               Actions
-//             </th>
-//           </tr>
-//         </thead>
-//         <tbody className="divide-y divide-gray-200 text-gray-600 text-xs">
-//           {expenses.map((exp) => (
-//             <tr
-//               key={exp.id}
-//               className="hover:bg-gray-50 odd:bg-white even:bg-gray-50/50 transition-colors"
-//             >
-//               <td className="whitespace-nowrap px-6 py-2 font-medium text-gray-900">
-//                 <div className="flex items-center gap-2">
-//                   <span>{exp.created_at}</span>
-//                 </div>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2">
-//                 <span className="font-medium">{exp.expense_number}</span>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2">
-//                 <span className="font-medium">{exp.description}</span>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2 text-gray-900">
-//                 <span className="font-semibold">{exp.amount}</span>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2">
-//                 <span className="font-medium">{exp.currency}</span>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2">
-//                 <span
-//                   className={`font-medium rounded py-0.5 px-3 ${
-//                     exp.payment_method === "bank"
-//                       ? "bg-blue-200 text-blue-500"
-//                       : exp.payment_method === "cash"
-//                         ? "bg-purple-200 text-purple-500"
-//                         : "bg-red-200 text-red-500"
-//                   }`}
-//                 >
-//                   {exp.payment_method === "bank"
-//                     ? "La banque"
-//                     : exp.payment_method === "cash"
-//                       ? "Cash"
-//                       : "Mobile money"}
-//                 </span>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2 text-center">
-//                 <span className="font-medium">{exp.id}</span>
-//               </td>
-//               <td className="whitespace-nowrap px-6 py-2 font-medium flex gap-2 justify-center">
-//                 <button
-//                   onClick={() => onEdit(exp)}
-//                   className=" hover:bg-gray-100 cursor-pointer"
-//                 >
-//                   <Pencil size={16} />
-//                 </button>
-
-//                 <button
-//                   onClick={() => onDelete(exp)}
-//                   className=" text-red-600 hover:bg-red-50 cursor-pointer"
-//                 >
-//                   <Trash2 size={16} />
-//                 </button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default ListExpense;
-
-
-
 import {
   CalendarDays,
   CreditCard,
@@ -201,7 +82,7 @@ const ListExpense = ({
   return (
     <div className="w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
+      <div className="flex items-center justify-between border-b border-gray-200 px-3 py-2">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 text-amber-700">
             <ReceiptText size={18} />
@@ -224,16 +105,16 @@ const ListExpense = ({
 
       {/* Table */}
       <div className="w-full overflow-x-auto">
-        <table className="w-full min-w-[1000px] text-left">
+        <table className="w-full min-w-250 text-left">
           <thead className="border-b border-gray-200 bg-gray-50">
-            <tr className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
-              <th className="px-5 py-3">Date</th>
-              <th className="px-5 py-3">Numéro</th>
-              <th className="px-5 py-3">Motif</th>
-              <th className="px-5 py-3 text-right">Montant</th>
-              <th className="px-5 py-3">Paiement</th>
-              <th className="px-5 py-3">Référence</th>
-              <th className="px-5 py-3 text-center">Actions</th>
+            <tr className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+              <th className="px-3 py-2">Date</th>
+              <th className="px-3 py-2">Numéro</th>
+              <th className="px-3 py-2">Motif</th>
+              <th className="px-3 py-2 text-right">Montant</th>
+              <th className="px-3 py-2">Paiement</th>
+              <th className="px-3 py-2">Référence</th>
+              <th className="px-3 py-2 text-center">Actions</th>
             </tr>
           </thead>
 
@@ -247,7 +128,7 @@ const ListExpense = ({
                   className="group transition-colors hover:bg-amber-50/30"
                 >
                   {/* Date */}
-                  <td className="whitespace-nowrap px-5 py-4">
+                  <td className="whitespace-nowrap px-2 py-1">
                     <div className="flex items-center gap-2">
                       <CalendarDays
                         size={14}
@@ -261,14 +142,14 @@ const ListExpense = ({
                   </td>
 
                   {/* Expense number */}
-                  <td className="whitespace-nowrap px-5 py-4">
+                  <td className="whitespace-nowrap px-2 py-1">
                     <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
                       {exp.expense_number}
                     </span>
                   </td>
 
                   {/* Description */}
-                  <td className="max-w-[280px] px-5 py-4">
+                  <td className="max-w-70 px-2 py-1">
                     <p
                       className="truncate text-xs font-medium text-gray-900"
                       title={exp.description}
@@ -278,14 +159,14 @@ const ListExpense = ({
                   </td>
 
                   {/* Amount */}
-                  <td className="whitespace-nowrap px-5 py-4 text-right">
+                  <td className="whitespace-nowrap px-2 py-1 text-right">
                     <span className="text-sm font-bold text-gray-900">
                       {formatAmount(exp.amount, exp.currency)}
                     </span>
                   </td>
 
                   {/* Payment method */}
-                  <td className="whitespace-nowrap px-5 py-4">
+                  <td className="whitespace-nowrap px-2 py-1">
                     <div
                       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${payment.className}`}
                     >
@@ -295,17 +176,17 @@ const ListExpense = ({
                   </td>
 
                   {/* Reference */}
-                  <td className="px-5 py-4">
+                  <td className="px-2 py-1">
                     <span
-                      className="block max-w-[150px] truncate font-mono text-[11px] text-gray-500"
-                      title={exp.id}
+                      className="block max-w-37.5 truncate font-mono text-[11px] text-gray-500"
+                      title={String(exp.id)}
                     >
                       {exp.id}
                     </span>
                   </td>
 
                   {/* Actions */}
-                  <td className="px-5 py-4">
+                  <td className="px-2 py-1">
                     <div className="flex items-center justify-center gap-1">
                       <button
                         type="button"
@@ -336,7 +217,7 @@ const ListExpense = ({
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50/70 px-5 py-3">
+      <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50/70 px-3 py-2">
         <span className="text-xs text-gray-500">
           Total : <strong className="text-gray-700">{expenses.length}</strong>{" "}
           enregistrement{expenses.length > 1 ? "s" : ""}

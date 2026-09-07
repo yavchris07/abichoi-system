@@ -28,28 +28,8 @@ const DashboardPage = () => {
         </h3>
       </div>
 
-      <div className="flex gap-2">
-        {isLoading ? (
-          <p>Chargement...</p>
-        ) : (
-          sold.map((bal: Balance) => (
-            <div
-              className="border border-gray-100 py-10 px-6 shadow rounded"
-              key={bal.id}
-            >
-              <div>
-                Caisse{" "}
-                {bal.currency === "USD" ? "Dollards" : "Francs congolais"}
-              </div>
-              <strong>
-                {bal.balance} {bal.currency}
-              </strong>
-            </div>
-          ))
-        )}
-      </div>
       {user?.role === "super" && <AdminDashboard />}
-      {user?.role === "cfo" && <FinanceDashboard />}
+      {user?.role === "cfo" && <FinanceDashboard balances={sold} isLoading={isLoading}/>}
       {user?.role === "dg" && <DirectionDashboard token="" />}
       {user?.role === "rh" && <RHDashboard token="" />}
     </MainLayout>

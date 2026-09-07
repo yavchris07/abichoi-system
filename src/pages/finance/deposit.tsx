@@ -13,19 +13,24 @@ import DepositPdf from "../../components/pdf/deposit-pdf";
 
 const DepositPage = () => {
   const token = getToken();
-  const { data: deposits, isLoading } = useDeposits(token ?? '');
-  const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
+  const { data: deposits, isLoading } = useDeposits(token ?? "");
+
+  const [open, setOpen] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Deposit | null>(null);
 
   const handleEdit = (depo: Deposit) => {
     setSelectedItem(depo);
-    setModal("edit");
+    setEditModal(true);
   };
   const handleDelete = (depo: Deposit) => {
     setSelectedItem(depo);
-    setModal("delete");
+    // setModal("delete");
+    setDeleteModal(true);
   };
 
+  // console.log('XXX : ', deposits)
   // Filter deposits based on the selected date range
   const [dateFilter, setDateFilter] = useState("");
   const [currencyFilter, setCurrencyFilter] = useState("");
@@ -49,7 +54,7 @@ const DepositPage = () => {
   }, [deposits, dateFilter, currencyFilter]);
 
   // pagination
-  const ITEMS_PER_PAGE = 20;
+  const ITEMS_PER_PAGE = 14;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
@@ -59,8 +64,9 @@ const DepositPage = () => {
     return filteredItems.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredItems, currentPage]);
 
-  console.log("==== rrrrrrr", filteredItems);
-  console.log("XXXX ==== ", deposits);
+  // console.log("==== rrrrrrr", filteredItems);
+  // console.log("XXXX ==== ", deposits);
+
   return (
     <MainLayout>
       <div className="flex justify-between">
@@ -69,7 +75,7 @@ const DepositPage = () => {
         </h3>
         <span
           className="bg-amber-500 px-1 py-1 text-black text-xs font-semibold cursor-pointer rounded-full"
-          onClick={() => setModal("open")}
+          onClick={() => setOpen(true)}
         >
           <Plus size={17} />
         </span>
@@ -139,29 +145,29 @@ const DepositPage = () => {
         </div>
       )}
 
-      {modal === "open" && (
+      {open && (
         <CreateDeposit
-          onClose={() => setModal(null)}
-          open='open'
-          token={token ?? ''}
+          onClose={() => setOpen(false)}
+          open={open}
+          token={token ?? ""}
         />
       )}
 
-      {modal === "edit" && selectedItem && (
+      {editModal && selectedItem && (
         <EditDeposit
           deposit={selectedItem}
-          onClose={() => setModal(null)}
-          open='edit'
-          token={token ?? ''}
+          onClose={() => setEditModal(false)}
+          open={editModal}
+          token={token ?? ""}
         />
       )}
 
-      {modal === "delete" && selectedItem && (
+      {deleteModal && selectedItem && (
         <DeleteDeposit
           deposit={selectedItem}
-          onClose={() => setModal(null)}
-          open='delete'
-          token={token ?? ''}
+          onClose={() => setDeleteModal(false)}
+          open={deleteModal}
+          token={token ?? ""}
         />
       )}
     </MainLayout>

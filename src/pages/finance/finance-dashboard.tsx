@@ -1,17 +1,25 @@
 import {
   ArrowDownLeft,
   ArrowUpRight,
-//   Banknote,
+  //   Banknote,
   CalendarDays,
   ChevronRight,
   CircleDollarSign,
   ReceiptText,
-  TrendingDown,
-  TrendingUp,
   Wallet,
 } from "lucide-react";
+import type { Balance } from "../../utils/types";
+import { FinanceKpi } from "../../components/finance-kpi";
+import { CashFlowCard } from "../../components/cash-flow-card";
 
-const FinanceDashboard = () => {
+type financeDasboardProps = {
+  balances: Balance[];
+  isLoading:boolean
+};
+
+const FinanceDashboard = ({ balances, isLoading }: financeDasboardProps) => {
+
+  if(isLoading) return <>Chargement ...</>
   return (
     <div className="min-h-full bg-zinc-50 p-4 md:p-6">
       {/* =====================================================
@@ -25,9 +33,7 @@ const FinanceDashboard = () => {
             </div>
 
             <div>
-              <h1 className="text-lg font-bold text-zinc-950">
-                Finance
-              </h1>
+              <h1 className="text-lg font-bold text-zinc-950">Finance</h1>
 
               <p className="mt-0.5 text-xs text-zinc-400">
                 Vue d'ensemble de la trésorerie.
@@ -41,17 +47,9 @@ const FinanceDashboard = () => {
           type="button"
           className="flex items-center gap-2 self-start rounded-xl border border-zinc-200 bg-white px-3.5 py-2.5 text-xs font-medium text-zinc-700 shadow-sm transition hover:bg-zinc-50 sm:self-auto"
         >
-          <CalendarDays
-            size={15}
-            className="text-zinc-400"
-          />
-
+          <CalendarDays size={15} className="text-zinc-400" />
           Aujourd'hui
-
-          <ChevronRight
-            size={14}
-            className="text-zinc-400"
-          />
+          <ChevronRight size={14} className="text-zinc-400" />
         </button>
       </div>
 
@@ -61,7 +59,7 @@ const FinanceDashboard = () => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <FinanceKpi
           title="Solde total"
-          value="$ 24,850.00"
+          value={`$ ${0}`}
           subtitle="Trésorerie disponible"
           icon={<Wallet size={18} />}
           trend="+4.2%"
@@ -71,7 +69,7 @@ const FinanceDashboard = () => {
 
         <FinanceKpi
           title="Entrées"
-          value="$ 8,450.00"
+          value=""
           subtitle="32 opérations"
           icon={<ArrowDownLeft size={18} />}
           trend="+12.5%"
@@ -80,21 +78,25 @@ const FinanceDashboard = () => {
 
         <FinanceKpi
           title="Sorties"
-          value="$ 3,280.00"
+          value=""
           subtitle="18 opérations"
           icon={<ArrowUpRight size={18} />}
           trend="-3.8%"
           positive
         />
-
-        <FinanceKpi
-          title="Solde net"
-          value="+$ 5,170.00"
-          subtitle="Sur la période"
-          icon={<CircleDollarSign size={18} />}
-          trend="+8.1%"
-          positive
-        />
+        <div className="grid grid-cols-2 gap-2">
+          {balances.map((balance, i) => (
+            <FinanceKpi
+              title={balance.currency === "USD" ? "Dollards" : "Francs congolais"}
+              value= {balance.balance +" "+ balance.currency}
+              subtitle={`En caisse ${balance.currency === "USD" ? "Dollards" : "Francs"}`}
+              icon={<CircleDollarSign size={18} />}
+              trend="+"
+              positive
+              key={i}
+            />
+          ))}
+        </div>
       </div>
 
       {/* =====================================================
@@ -172,179 +174,8 @@ const FinanceDashboard = () => {
   );
 };
 
-/* =========================================================
-   KPI
-========================================================= */
 
-type FinanceKpiProps = {
-  title: string;
-  value: string;
-  subtitle: string;
-  icon: React.ReactNode;
-  trend: string;
-  positive?: boolean;
-  accent?: boolean;
-};
 
-const FinanceKpi = ({
-  title,
-  value,
-  subtitle,
-  icon,
-  trend,
-  positive,
-  accent,
-}: FinanceKpiProps) => {
-  return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between">
-        <div
-          className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-            accent
-              ? "bg-amber-50 text-amber-600"
-              : "bg-zinc-100 text-zinc-500"
-          }`}
-        >
-          {icon}
-        </div>
-
-        <span
-          className={`flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold ${
-            positive
-              ? "bg-emerald-50 text-emerald-600"
-              : "bg-red-50 text-red-600"
-          }`}
-        >
-          {positive ? (
-            <TrendingUp size={11} />
-          ) : (
-            <TrendingDown size={11} />
-          )}
-
-          {trend}
-        </span>
-      </div>
-
-      <div className="mt-4">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-          {title}
-        </p>
-
-        <p className="mt-1 text-xl font-bold tracking-tight text-zinc-950">
-          {value}
-        </p>
-
-        <p className="mt-1 text-[11px] text-zinc-400">
-          {subtitle}
-        </p>
-      </div>
-    </div>
-  );
-};
-
-/* =========================================================
-   CASH FLOW
-========================================================= */
-
-const CashFlowCard = () => {
-  return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between">
-        <div>
-          <h2 className="text-sm font-semibold text-zinc-950">
-            Flux de trésorerie
-          </h2>
-
-          <p className="mt-0.5 text-[11px] text-zinc-400">
-            Évolution des entrées et sorties.
-          </p>
-        </div>
-
-        <select className="rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-[10px] text-zinc-600 outline-none focus:border-amber-500">
-          <option>7 jours</option>
-          <option>30 jours</option>
-          <option>3 mois</option>
-        </select>
-      </div>
-
-      {/* Chart placeholder */}
-      <div className="mt-6 h-60">
-        <div className="relative h-full">
-          {/* Grid */}
-          <div className="absolute inset-0 flex flex-col justify-between">
-            {[1, 2, 3, 4, 5].map((item) => (
-              <div
-                key={item}
-                className="border-t border-dashed border-zinc-100"
-              />
-            ))}
-          </div>
-
-          {/* Fake chart */}
-          <div className="absolute inset-x-0 bottom-5 top-5 flex items-end justify-around px-3">
-            {[
-              { in: 48, out: 25 },
-              { in: 65, out: 32 },
-              { in: 42, out: 28 },
-              { in: 80, out: 35 },
-              { in: 60, out: 42 },
-              { in: 90, out: 38 },
-              { in: 72, out: 30 },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex h-full items-end gap-1"
-              >
-                <div
-                  className="w-3 rounded-t-md bg-amber-400/80 transition hover:bg-amber-500"
-                  style={{
-                    height: `${item.in}%`,
-                  }}
-                />
-
-                <div
-                  className="w-3 rounded-t-md bg-zinc-200 transition hover:bg-zinc-300"
-                  style={{
-                    height: `${item.out}%`,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Labels */}
-          <div className="absolute inset-x-0 bottom-0 flex justify-around text-[9px] text-zinc-400">
-            <span>Lun</span>
-            <span>Mar</span>
-            <span>Mer</span>
-            <span>Jeu</span>
-            <span>Ven</span>
-            <span>Sam</span>
-            <span>Dim</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-3 flex items-center gap-5 border-t border-zinc-100 pt-4">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-amber-400" />
-
-          <span className="text-[10px] text-zinc-500">
-            Entrées
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-zinc-300" />
-
-          <span className="text-[10px] text-zinc-500">
-            Sorties
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 /* =========================================================
    EXPENSE DISTRIBUTION
@@ -387,27 +218,20 @@ const ExpenseDistribution = () => {
       </div>
 
       <div className="my-7 flex items-center justify-center">
-        <div className="relative flex h-36 w-36 items-center justify-center rounded-full border-[18px] border-amber-400">
-          <div className="absolute inset-[-18px] rounded-full border-[18px] border-transparent border-r-zinc-200 border-b-zinc-300 rotate-[-20deg]" />
+        <div className="relative flex h-36 w-36 items-center justify-center rounded-full border-18 border-amber-400">
+          <div className="absolute -inset-4.5 rounded-full border-18 border-transparent border-r-zinc-200 border-b-zinc-300 rotate-[-20deg]" />
 
           <div className="text-center">
-            <p className="text-lg font-bold text-zinc-950">
-              $3,280
-            </p>
+            <p className="text-lg font-bold text-zinc-950">$3,280</p>
 
-            <p className="text-[10px] text-zinc-400">
-              Total
-            </p>
+            <p className="text-[10px] text-zinc-400">Total</p>
           </div>
         </div>
       </div>
 
       <div className="space-y-3">
         {expenses.map((expense, index) => (
-          <div
-            key={expense.name}
-            className="flex items-center justify-between"
-          >
+          <div key={expense.name} className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span
                 className={`h-2 w-2 rounded-full ${
@@ -421,9 +245,7 @@ const ExpenseDistribution = () => {
                 }`}
               />
 
-              <span className="text-xs text-zinc-600">
-                {expense.name}
-              </span>
+              <span className="text-xs text-zinc-600">{expense.name}</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -465,13 +287,9 @@ const QuickAction = ({
       </div>
 
       <div className="min-w-0">
-        <p className="text-xs font-semibold text-zinc-900">
-          {title}
-        </p>
+        <p className="text-xs font-semibold text-zinc-900">{title}</p>
 
-        <p className="mt-0.5 text-[10px] text-zinc-400">
-          {description}
-        </p>
+        <p className="mt-0.5 text-[10px] text-zinc-400">{description}</p>
       </div>
 
       <ChevronRight
@@ -555,9 +373,7 @@ const RecentOperations = () => {
             <div className="text-right">
               <p
                 className={`text-xs font-bold ${
-                  positive
-                    ? "text-emerald-600"
-                    : "text-zinc-800"
+                  positive ? "text-emerald-600" : "text-zinc-800"
                 }`}
               >
                 {operation.amount}

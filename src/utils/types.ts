@@ -92,6 +92,16 @@ export type Deposit = {
   created_at: string;
 };
 
+export type DepositPayload = {
+  // deposit_number: string;
+  // voucher_number:string,
+  source: string;
+  amount: number;
+  currency: string;
+  description: string;
+  created_at: string;
+};
+
 export type Withdrawal = {
   id: number;
   withdrawal_number: string;

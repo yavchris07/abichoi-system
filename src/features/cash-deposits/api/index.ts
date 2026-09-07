@@ -1,10 +1,10 @@
 
-import type { Deposit} from "../../../utils/types";
+import type { Deposit, DepositPayload} from "../../../utils/types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const cashDepositApi = {
-  create: async (data: Deposit, token: string) => {
+  create: async (data: DepositPayload, token: string) => {
     const res = await fetch(`${API_URL}/cash-deposit/create`, {
       method: "POST",
       headers: {
