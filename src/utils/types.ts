@@ -128,3 +128,43 @@ export type Audit = {
   user_agent: string;
   created_at: string;
 };
+
+
+// contrat
+export type ContratRegister = {
+  id: number;
+  ref: string;
+  institule: string;
+  cocontrat: string;
+  reference: string;
+  date_signature: string;
+  date_echeance: string;
+  mode: string;
+  delai: string;
+  responsable: string;
+};
+
+export type ContratRegisterPayload = {
+  ref: string;
+  institule: string;
+  cocontrat: string;
+  reference: string;
+  date_signature: string;
+  date_echeance: string;
+  mode: string;
+  delai: string;
+  responsable: string;
+};
+
+// type ContratRegisterFormData = {
+//   ref: string;
+//   institule: string;
+//   cocontrat: string;
+//   reference: string;
+//   date_signature: string;
+//   date_echeance: string;
+//   mode: string;
+//   delai: string;
+//   responsable: string;
+// };
+ 

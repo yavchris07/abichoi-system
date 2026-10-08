@@ -11,6 +11,11 @@ import ReportPage from "../pages/finance/reports";
 import SalePage from "../pages/finance/sale";
 import WithdrawalPage from "../pages/finance/withdrawal";
 import LoginPage from "../pages/login-page";
+import MailReceived from "../pages/reception/mail-received";
+import MailSend from "../pages/reception/mail-send";
+import ReceptionDashboard from "../pages/reception/reception-dashboard";
+import Register from "../pages/reception/register";
+import Visitors from "../pages/reception/visitors";
 import SettingPage from "../pages/setting";
 import type { Router } from "./types";
 
@@ -67,4 +72,24 @@ export const routers: Router[] = [
     path: "/reports",
     element: <ReportPage />
   },
+  {
+    path: "/reception-dashboard",
+    element: <ReceptionDashboard />,
+  },
+  {
+    path: "/visitors",
+    element: <Visitors />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/mail-send",
+    element: <MailSend />,
+  },
+  {
+    path: "/mail-received",
+    element: <MailReceived />,
+  }
 ];
