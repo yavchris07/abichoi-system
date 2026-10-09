@@ -1,14 +1,14 @@
 import { Send, SendHorizonal } from "lucide-react";
 import Loading from "../../../components/loading";
-import type { MailSend } from "../../../utils/types";
+import type { MailReceived } from "../../../utils/types";
 
 interface MailReceivedProps {
-  mailSends: MailSend[];
+  mailReceived: MailReceived[];
   loading: boolean;
 }
 
-const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
-   if (loading) {
+const ListMailReceived = ({ loading, mailReceived }: MailReceivedProps) => {
+  if (loading) {
     return <Loading />;
   }
 
@@ -22,7 +22,7 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
     }).format(new Date(date));
   };
 
-  if (!mailSends || mailSends.length === 0) {
+  if (!mailReceived || mailReceived.length === 0) {
     return (
       <div className="my-2 flex w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-6 py-14">
         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-400">
@@ -40,7 +40,7 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
     );
   }
   return (
-       <div className="w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div className="w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-gray-200 px-5 py-2">
         <div className="flex items-center gap-3">
@@ -49,17 +49,17 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-gray-900">Courriels Entrant</h2>
+            <h2 className="text-sm font-semibold text-gray-900">
+              Courriels Entrant
+            </h2>
 
-            <p className="text-xs text-gray-500">
-              Liste des courriels entrant
-            </p>
+            <p className="text-xs text-gray-500">Liste des courriels entrant</p>
           </div>
         </div>
 
         <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-          {mailSends.length} courriels entrant
-          {mailSends.length > 1 ? "s" : ""}
+          {mailReceived.length} courriels entrant
+          {mailReceived.length > 1 ? "s" : ""}
         </span>
       </div>
 
@@ -69,28 +69,30 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
           <thead className="border-b border-gray-200 bg-gray-50">
             <tr className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">
               <th className="px-3 py-2">N0 D'ordre</th>
-              <th className="px-3 py-2">Date d'envoi</th>
-              <th className="px-3 py-2">Destinateur / Organisme</th>
+              <th className="px-3 py-2">Date D'arrivee</th>
+              <th className="px-3 py-2">Date du courriel</th>
+              <th className="px-3 py-2">Expediteur / Organisme</th>
               <th className="px-3 py-2">Objet du courriel</th>
-              <th className="px-3 py-2">Signature DG / Par interim</th>
-              <th className="px-3 py-2">Mode expectif</th>
-              <th className="px-3 py-2">N0 Decharge / preuve de depot</th>
-              <th className="px-3 py-2">Copie archivee</th>
+              <th className="px-3 py-2">Type de document</th>
+              <th className="px-3 py-2">Direction / Service destinateur</th>
+              <th className="px-3 py-2">Action / preuve de depot</th>
+              <th className="px-3 py-2">Date de transmission</th>
+              <th className="px-3 py-2">Emplacement</th>
               <th className="px-3 py-2">Statut</th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-gray-100">
-            {mailSends.map((contrat) => {
+            {mailReceived.map((received) => {
               return (
                 <tr
-                  key={contrat.id}
+                  key={received.id}
                   className="transition-colors hover:bg-amber-50/30"
                 >
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium text-gray-700">
-                        {contrat.ordre}
+                        {received.ordre}
                       </span>
                     </div>
                   </td>
@@ -98,63 +100,70 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.send || "-"}
+                        {formatDate(received.arrived) || "-"}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.organism || "-"}
+                        {formatDate(received.mail) || "-"}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.objet || "-"}
+                        {received.organism || "-"}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {formatDate(contrat.initial)}
+                        {received.objet}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.signature}
+                        {received.document}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.mode || "-"}
+                        {received.direction || "-"}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.decharge || "-"}
+                        {received.action || "-"}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.copy || "-"}
+                        {formatDate(received.transmission) || "-"}
                       </span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
-                        {contrat.statut || "-"}
+                        {received.emplacement || "-"}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-md bg-gray-100 px-2 py-1 font-mono text-[11px] font-medium text-gray-700">
+                        {received.statut || "-"}
                       </span>
                     </div>
                   </td>
@@ -168,9 +177,9 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50/70 px-3 py-2">
         <span className="text-xs text-gray-500">
-          {mailSends.length} Courriels entrant
-          {mailSends.length > 1 ? "s" : ""} affiché
-          {mailSends.length > 1 ? "s" : ""}
+          {mailReceived.length} Courriels entrant
+          {mailReceived.length > 1 ? "s" : ""} affiché
+          {mailReceived.length > 1 ? "s" : ""}
         </span>
 
         <span className="flex items-center gap-1.5 text-[11px] text-gray-400">
@@ -179,9 +188,7 @@ const ListMailReceived = ({loading,mailSends}:MailReceivedProps) => {
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ListMailReceived
-
-
+export default ListMailReceived;

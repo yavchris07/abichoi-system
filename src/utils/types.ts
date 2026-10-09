@@ -203,7 +203,7 @@ export type MailSendPayload = {
 // Mail received
 export type MailReceived = {
   id:number;
-  order:string;
+  ordre:string;
   arrived:string;
   mail:string;
   organism:string;
@@ -218,7 +218,7 @@ export type MailReceived = {
 
 
 export type MailReceivedPayload = {
-  order:string;
+  ordre:string;
   arrived:string;
   mail:string;
   organism:string;

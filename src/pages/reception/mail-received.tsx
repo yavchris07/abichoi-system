@@ -2,9 +2,9 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import MainLayout from "../../components/main-layout";
 import { getToken } from "../../utils/get-token";
-import { useMailSend } from "../../features/mail-send/hooks/use-mail-send";
 import CreateMailReceived from "../../features/mail-received/components/create-mail-received";
 import ListMailReceived from "../../features/mail-received/components/list-mail-received";
+import { useMailReceived } from "../../features/mail-received/hooks/use-mail-received";
 
 const MailReceived = () => {
   const [open, setOpen] = useState(false);
@@ -14,12 +14,12 @@ const MailReceived = () => {
   //   // const [modal, setModal] = useState<"edit" | "delete"| null>(null);
   //   const [selectedItem, setSelectedItem] = useState<Expense | null>(null);
 
-  const { data, isLoading } = useMailSend(token ?? "");
+  const { data, isLoading } = useMailReceived(token ?? "");
 
-  const mailsends = data || [];
+  const mailReceived = data || [];
   const loading = isLoading;
 
-  console.log("Sent ", mailsends);
+  console.log("Received ", mailReceived);
   return (
     <MainLayout>
       <div className="flex justify-between py-3">
@@ -35,7 +35,7 @@ const MailReceived = () => {
         </span>
       </div>
 
-      <ListMailReceived loading={loading} mailSends={mailsends} />
+      <ListMailReceived loading={loading} mailReceived={mailReceived} />
       {open && (
         <CreateMailReceived onClose={() => setOpen(false)} open={open} />
       )}

@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import {
   CalendarDays,
-  CreditCard,
   FileText,
   Loader2,
-  ReceiptText,
-  User,
-  Wallet,
+  SendHorizonal,
   X,
 } from "lucide-react";
 
 import { getToken } from "../../../utils/get-token";
 import { useToast } from "../../../components/customer-toast";
 import Modal from "../../../components/modal";
-import type {
-  MailReceivedPayload,
-} from "../../../utils/types";
+import type { MailReceivedPayload } from "../../../utils/types";
 import { useCreateMailReceived } from "../hooks/use-create-mail-received";
 
 type CreateMailReceivedProps = {
@@ -32,15 +27,15 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
   const today = new Date().toISOString().split("T")[0];
 
   const [formData, setFormData] = useState<MailReceivedPayload>({
-    order: "",
+    ordre: "",
     arrived: today,
-    mail: "",
+    mail: today,
     organism: "",
     objet: "",
     document: "",
     direction: "",
     action: "",
-    transmission: "",
+    transmission: today,
     emplacement: "",
     statut: "",
   });
@@ -70,8 +65,8 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.order) {
-      showToast("Utilisateur introuvable.", "error");
+    if (!formData.ordre) {
+      showToast("Le numero de reference introuvable.", "error");
       return;
     }
 
@@ -110,7 +105,7 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
         <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
-              <ReceiptText size={20} />
+              <SendHorizonal size={20} />
             </div>
 
             <div>
@@ -152,7 +147,7 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
                   <input
                     type="text"
                     name="ordre"
-                    value={formData.order}
+                    value={formData.ordre}
                     onChange={handleChange}
                     placeholder="Numéro d'ordre"
                     className={inputClass}
@@ -171,8 +166,8 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
 
                     <input
                       type="date"
-                      name="send"
-                      value={formData.send}
+                      name="arrived"
+                      value={formData.arrived}
                       onChange={handleChange}
                       required
                       className={`${inputClass} pl-9`}
@@ -183,27 +178,19 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
                 {/* cocontrat */}
                 <div>
                   <label className={labelClass}>Objet</label>
-
-                  <div className="relative">
-                    <User
-                      size={15}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                    />
-
-                    <input
-                      type="text"
-                      name="objet"
-                      value={formData.objet}
-                      onChange={handleChange}
-                      placeholder="Objet"
-                      required
-                      className={`${inputClass} pl-9`}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    name="objet"
+                    value={formData.objet}
+                    onChange={handleChange}
+                    placeholder="Objet"
+                    required
+                    className={`${inputClass} pl-9`}
+                  />
                 </div>
                 {/* Reference */}
                 <div>
-                  <label className={labelClass}>Date initiatrice </label>
+                  <label className={labelClass}>Date du courriel </label>
 
                   <div className="relative">
                     <CalendarDays
@@ -213,8 +200,8 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
 
                     <input
                       type="date"
-                      name="initial"
-                      value={formData.initial}
+                      name="mail"
+                      value={formData.mail}
                       onChange={handleChange}
                       required
                       className={`${inputClass} pl-9`}
@@ -224,14 +211,11 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
 
                 {/* Date sign */}
                 <div>
-                  <label className={labelClass}>
-                    Signature DG/ par interim
-                  </label>
-
+                  <label className={labelClass}>Action</label>
                   <input
                     type="text"
-                    name="signature"
-                    value={formData.signature}
+                    name="action"
+                    value={formData.action}
                     onChange={handleChange}
                     placeholder="Signature DG"
                     required
@@ -241,43 +225,35 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
 
                 {/* Date echeance*/}
                 <div>
-                  <label className={labelClass}>Numéro decharge</label>
-
+                  <label className={labelClass}>
+                    Direction / service destinateur
+                  </label>
                   <input
                     type="text"
-                    name="decharge"
-                    value={formData.decharge}
+                    name="direction"
+                    value={formData.direction}
                     onChange={handleChange}
-                    placeholder="Numéro decharge"
+                    placeholder="Direction / service destinateur"
                     required
                     className={`${inputClass} pl-2`}
                   />
                 </div>
               </div>
             </div>
-
             {/* Montant */}
-            <div className="rounded-xl border border-amber-100 bg-amber-50/50 p-4">
-              <div className="mb-3 flex items-center gap-2">
-                <Wallet size={16} className="text-amber-600" />
-
-                <h3 className="text-xs font-bold uppercase tracking-wide text-gray-800">
-                  Mode de reconclusion
-                </h3>
-              </div>
-
+            <div className="rounded-xl border border-amber-100 bg-amber-50/50 p-1">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
                 <div>
-                  <label className={labelClass}>Mode expectif</label>
+                  {/* <label className={labelClass}>Type de document</label> */}
 
                   <select
-                    name="mode"
-                    value={formData.mode}
+                    name="document"
+                    value={formData.document}
                     onChange={handleChange}
                     required
                     className={inputClass}
                   >
-                    <option value="">-- Sélectionner un mode --</option>
+                    <option value="">-- Sélectionner un type de document --</option>
 
                     {modes.map((mode) => (
                       <option key={mode.id} value={mode.id}>
@@ -288,26 +264,17 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
                 </div>
               </div>
             </div>
-
             {/* Classification */}
             <div>
-              <div className="mb-3 flex items-center gap-2">
-                <CreditCard size={16} className="text-amber-600" />
-
-                <h3 className="text-xs font-bold uppercase tracking-wide text-gray-800">
-                  Archivage et Etat
-                </h3>
-              </div>
-
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className={labelClass}>Copie archivée </label>
+                  <label className={labelClass}>Emplacement </label>
                   <input
                     type="text"
-                    name="copy"
-                    value={formData.copy}
+                    name="emplacement"
+                    value={formData.emplacement}
                     onChange={handleChange}
-                    placeholder="Copie archivée"
+                    placeholder="Emplacement"
                     required
                     className={`${inputClass} pl-2`}
                   />
@@ -327,11 +294,40 @@ const CreateMailReceived = ({ open, onClose }: CreateMailReceivedProps) => {
                 </div>
               </div>
             </div>
-
             {/* Description */}
+            <div>
+              <label className={labelClass}>Organisme / Expediteur </label>
+              <input
+                type="text"
+                name="organism"
+                value={formData.organism}
+                onChange={handleChange}
+                required
+                placeholder="Organisme / Expediteur"
+                className={`${inputClass} pl-2`}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Date de transmission </label>
 
+              <div className="relative">
+                <CalendarDays
+                  size={15}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+
+                <input
+                  type="date"
+                  name="transmission"
+                  value={formData.transmission}
+                  onChange={handleChange}
+                  required
+                  className={`${inputClass} pl-9`}
+                />
+              </div>
+            </div>
             {/* Information */}
-            <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+            <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2">
               <p className="text-[11px] leading-5 text-gray-500">
                 Cette opération sera enregistrée dans la liste de courriels
                 entrant et pourra être consultée.
