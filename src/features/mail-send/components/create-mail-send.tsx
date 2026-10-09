@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import {
-  CalendarCheck,
   CalendarDays,
   CreditCard,
   FileText,
   Loader2,
   ReceiptText,
-  User,
   Wallet,
   X,
 } from "lucide-react";
@@ -14,36 +12,33 @@ import {
 import { getToken } from "../../../utils/get-token";
 import { useToast } from "../../../components/customer-toast";
 import Modal from "../../../components/modal";
-import { useCreateContratRegister } from "../hooks/use-create-contrat-register";
-import type { ContratRegisterPayload } from "../../../utils/types";
+import type { MailSendPayload } from "../../../utils/types";
+import { useCreateMailSend } from "../hooks/use-create-mail-send";
 
-type CreateContratRegisterProps = {
+type CreateMailsendProps = {
   open: boolean;
   onClose: () => void;
 };
 
-const CreateContratRegister = ({
-  onClose,
-  open,
-}: CreateContratRegisterProps) => {
+const CreateMailSend = ({ onClose, open }: CreateMailsendProps) => {
   const token = getToken();
 
-  const { create, fail, pending } = useCreateContratRegister(token ?? "");
+  const { create, fail, pending } = useCreateMailSend(token ?? "");
   const { showToast } = useToast();
 
   const today = new Date().toISOString().split("T")[0];
-   const todays = new Date().toISOString().split("T")[0];
 
-  const [formData, setFormData] = useState<ContratRegisterPayload>({
-    ref: "",
-    institule: "",
-    cocontrat: "",
-    reference: "",
-    date_signature: today,
-    date_echeance: todays,
+  const [formData, setFormData] = useState<MailSendPayload>({
+    ordre: "",
+    send: today,
+    organism: "",
+    objet: "",
+    initial: today,
+    signature: "",
     mode: "",
-    delai: "",
-    responsable: "",
+    decharge: "",
+    copy: "",
+    statut: "",
   });
 
   const modes = [
@@ -64,19 +59,14 @@ const CreateContratRegister = ({
 
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        name === "amount"
-          ? Number(value)
-          : name === "category_id"
-            ? Number(value)
-            : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.ref) {
+    if (!formData.ordre) {
       showToast("Utilisateur introuvable.", "error");
       return;
     }
@@ -102,16 +92,19 @@ const CreateContratRegister = ({
     // }
 
     try {
-        console.log('Payload : ', formData);
+      console.log("Payload : ", formData);
       await create(formData);
 
-      showToast("Contrat enregistrée avec succès.", "success");
+      showToast("Courriel entrant enregistré avec succès.", "success");
 
       onClose();
     } catch (error) {
-      console.error("Erreur création dépense :", error);
+      console.error("Erreur création courriel entrant :", error);
 
-      showToast(fail || "Impossible d'enregistrer le contrat.", "error");
+      showToast(
+        fail || "Impossible d'enregistrer le couurriel entrant.",
+        "error",
+      );
     }
   };
 
@@ -121,7 +114,6 @@ const CreateContratRegister = ({
     "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-100";
 
   const labelClass = "mb-1.5 block text-xs font-semibold text-gray-700";
-
   return (
     <Modal>
       <div className="w-full max-w-2xl overflow-hidden rounded-2xl bg-white">
@@ -134,10 +126,10 @@ const CreateContratRegister = ({
 
             <div>
               <h2 className="text-base font-bold text-gray-900">
-                Nouveau contrat
+                Nouveau courriel sortant
               </h2>
 
-              <p className="text-xs text-gray-500">Enregistrer un contrat</p>
+              <p className="text-xs text-gray-500">Enregistrer un courriel</p>
             </div>
           </div>
 
@@ -167,69 +159,69 @@ const CreateContratRegister = ({
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className={labelClass}>Numéro Réference</label>
-
+                  <label className={labelClass}>Numéro d'ordre</label>
                   <input
                     type="text"
-                    name="ref"
-                    value={formData.ref}
+                    name="ordre"
+                    value={formData.ordre}
                     onChange={handleChange}
-                    placeholder="ABC-00"
+                    placeholder="Numéro d'ordre"
                     className={inputClass}
                   />
                 </div>
 
                 {/* Numéro pièce */}
                 <div>
-                  <label className={labelClass}>Intitulé</label>
-
-                  <input
-                    type="text"
-                    name="institule"
-                    value={formData.institule}
-                    onChange={handleChange}
-                    placeholder="Nom du contrat"
-                    className={inputClass}
-                  />
-                </div>
-
-                {/* cocontrat */}
-                <div>
-                  <label className={labelClass}>Cocontratat</label>
+                  <label className={labelClass}>Date d'envoi</label>
 
                   <div className="relative">
-                    <User
+                    <CalendarDays
                       size={15}
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                     />
 
                     <input
-                      type="text"
-                      name="cocontrat"
-                      value={formData.cocontrat}
+                      type="date"
+                      name="send"
+                      value={formData.send}
                       onChange={handleChange}
-                      placeholder="Cocontratat"
                       required
                       className={`${inputClass} pl-9`}
                     />
                   </div>
                 </div>
-                {/* Reference */}
+
+                {/* cocontrat */}
                 <div>
-                  <label className={labelClass}>Réference </label>
+                  <label className={labelClass}>Objet</label>
 
                   <div className="relative">
-                    <User
+                    <input
+                      type="text"
+                      name="objet"
+                      value={formData.objet}
+                      onChange={handleChange}
+                      placeholder="Objet"
+                      required
+                      className={`${inputClass} pl-2`}
+                    />
+                  </div>
+                </div>
+                {/* Reference */}
+                <div>
+                  <label className={labelClass}>Date initiatrice </label>
+
+                  <div className="relative">
+                    <CalendarDays
                       size={15}
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                     />
 
                     <input
-                      type="text"
-                      name="reference"
-                      value={formData.reference}
+                      type="date"
+                      name="initial"
+                      value={formData.initial}
                       onChange={handleChange}
-                      placeholder="Réference"
                       required
                       className={`${inputClass} pl-9`}
                     />
@@ -238,44 +230,34 @@ const CreateContratRegister = ({
 
                 {/* Date sign */}
                 <div>
-                  <label className={labelClass}>Date signature</label>
+                  <label className={labelClass}>
+                    Signature DG/ par interim
+                  </label>
 
-                  <div className="relative">
-                    <CalendarDays
-                      size={15}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                    />
-
-                    <input
-                      type="date"
-                      name="date_signature"
-                      value={formData.date_signature}
-                      onChange={handleChange}
-                      required
-                      className={`${inputClass} pl-9`}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    name="signature"
+                    value={formData.signature}
+                    onChange={handleChange}
+                    placeholder="Signature DG"
+                    required
+                    className={`${inputClass} pl-2`}
+                  />
                 </div>
 
                 {/* Date echeance*/}
                 <div>
-                  <label className={labelClass}>Date echeance</label>
+                  <label className={labelClass}>Numéro decharge</label>
 
-                  <div className="relative">
-                    <CalendarDays
-                      size={15}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                    />
-
-                    <input
-                      type="date"
-                      name="date_echeance"
-                      value={formData.date_echeance}
-                      onChange={handleChange}
-                      required
-                      className={`${inputClass} pl-9`}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    name="decharge"
+                    value={formData.decharge}
+                    onChange={handleChange}
+                    placeholder="Numéro decharge"
+                    required
+                    className={`${inputClass} pl-2`}
+                  />
                 </div>
               </div>
             </div>
@@ -292,7 +274,7 @@ const CreateContratRegister = ({
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
                 <div>
-                  <label className={labelClass}>Mode</label>
+                  <label className={labelClass}>Mode expectif</label>
 
                   <select
                     name="mode"
@@ -301,7 +283,7 @@ const CreateContratRegister = ({
                     required
                     className={inputClass}
                   >
-                    <option value="">-- Sélectionner le mode --</option>
+                    <option value="">-- Sélectionner un mode --</option>
 
                     {modes.map((mode) => (
                       <option key={mode.id} value={mode.id}>
@@ -319,62 +301,57 @@ const CreateContratRegister = ({
                 <CreditCard size={16} className="text-amber-600" />
 
                 <h3 className="text-xs font-bold uppercase tracking-wide text-gray-800">
-                  Responsable et delai
+                  Archivage et Etat
                 </h3>
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className={labelClass}>Delai de préavu </label>
-
-                  <div className="relative">
-                    <CalendarCheck
-                      size={15}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                    />
-
-                    <input
-                      type="text"
-                      name="delai"
-                      value={formData.delai}
-                      onChange={handleChange}
-                      placeholder="Delai du contrat"
-                      required
-                      className={`${inputClass} pl-9`}
-                    />
-                  </div>
+                  <label className={labelClass}>Copie archivée </label>
+                  <input
+                    type="text"
+                    name="copy"
+                    value={formData.copy}
+                    onChange={handleChange}
+                    placeholder="Copie archivée"
+                    required
+                    className={`${inputClass} pl-2`}
+                  />
                 </div>
 
                 <div>
-                  <label className={labelClass}>Responsable</label>
-
-                  <div className="relative">
-                    <User
-                      size={15}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                    />
-
-                    <input
-                      type="text"
-                      name="responsable"
-                      value={formData.responsable}
-                      onChange={handleChange}
-                      placeholder="Responsable"
-                      required
-                      className={`${inputClass} pl-9`}
-                    />
-                  </div>
+                  <label className={labelClass}>Statut</label>
+                  <input
+                    type="text"
+                    name="statut"
+                    value={formData.statut}
+                    onChange={handleChange}
+                    placeholder="Statut"
+                    required
+                    className={`${inputClass} pl-2`}
+                  />
                 </div>
               </div>
             </div>
 
             {/* Description */}
-
+            <div>
+              <label className={labelClass}>Organisme / destinateur</label>
+              <input
+                type="text"
+                name="organism"
+                value={formData.organism}
+                onChange={handleChange}
+                placeholder="Organisme / destinateur"
+                required
+                className={`${inputClass} pl-2`}
+              />
+            </div>
             {/* Information */}
-            <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+            <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2">
               <p className="text-[11px] leading-5 text-gray-500">
-                Cette opération sera enregistrée dans le registre de contrat et
-                pourra être consultée.
+                Cette opération sera enregistrée dans la liste de courriels
+                sortant et pourra être consultée.
               </p>
             </div>
           </div>
@@ -411,4 +388,4 @@ const CreateContratRegister = ({
   );
 };
 
-export default CreateContratRegister;
+export default CreateMailSend;

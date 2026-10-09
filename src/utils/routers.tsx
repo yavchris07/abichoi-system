@@ -85,11 +85,11 @@ export const routers: Router[] = [
     element: <Register />,
   },
   {
-    path: "/mail-send",
+    path: "/depart",
     element: <MailSend />,
   },
   {
-    path: "/mail-received",
+    path: "/arrived",
     element: <MailReceived />,
   }
 ];

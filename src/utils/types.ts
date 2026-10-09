@@ -167,4 +167,66 @@ export type ContratRegisterPayload = {
 //   delai: string;
 //   responsable: string;
 // };
+
+
+
+// Mail send
+export type MailSend = {
+  id:number;
+  ordre:string;
+  send:string;
+  organism:string;
+  objet:string;
+  initial:string;
+  signature:string;
+  mode:string;
+  decharge:string;
+  copy: string;
+  statut:string
+}
+
+
+export type MailSendPayload = {
+  ordre:string;
+  send:string;
+  organism:string;
+  objet:string;
+  initial:string;
+  signature:string;
+  mode:string;
+  decharge:string;
+  copy: string;
+  statut:string
+}
  
+
+// Mail received
+export type MailReceived = {
+  id:number;
+  order:string;
+  arrived:string;
+  mail:string;
+  organism:string;
+  objet:string;
+  document:string;
+  direction:string;
+  action:string;
+  transmission: string;
+  emplacement:string;
+  statut:string
+}
+
+
+export type MailReceivedPayload = {
+  order:string;
+  arrived:string;
+  mail:string;
+  organism:string;
+  objet:string;
+  document:string;
+  direction:string;
+  action:string;
+  transmission: string;
+  emplacement:string;
+  statut:string
+}
