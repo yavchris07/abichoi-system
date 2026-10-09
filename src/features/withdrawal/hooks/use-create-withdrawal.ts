@@ -1,13 +1,14 @@
 
 import { useState } from "react";
 import { withdrawalApi } from "../api";
-import type { Withdrawal } from "../../../utils/types";
+// import type { Withdrawal } from "../../../utils/types";
+import type { WithdrawalFormData } from "../components/create-withdrawal";
 
 export const useCreatewithdrawal = (token: string) => {
   const [pending, setPending] = useState(false);
   const [fail, setFail] = useState("");
 
-  const create = async (data: Withdrawal) => {
+  const create = async (data: WithdrawalFormData) => {
     if (pending) return;
     try {
       setPending(true);

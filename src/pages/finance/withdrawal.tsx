@@ -15,16 +15,18 @@ const WithdrawalPage = () => {
   const token = getToken();
   const { data: withdrawals, isLoading } = useWithdrawals(token ?? '');
 
-  const [modal, setModal] = useState<"edit" | "delete" | "open" | null>(null);
+  const [modal, setModal] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Withdrawal | null>(null);
 
   const handleEdit = (withdrawal: Withdrawal) => {
     setSelectedItem(withdrawal);
-    setModal("edit");
+   setOpenUpdate(true);
   };
   const handleDelete = (withdrawal: Withdrawal) => {
     setSelectedItem(withdrawal);
-    setModal("delete");
+   setOpenDelete(true);
   };
 
   // Filter deposits based on the selected date range
@@ -67,7 +69,7 @@ const WithdrawalPage = () => {
         </h3>
         <span
           className="bg-amber-500 px-1 py-1 text-black text-xs font-semibold cursor-pointer rounded-full"
-          onClick={() => setModal("open")}
+          onClick={() => setModal(true)}
         >
           <Plus size={17} />
         </span>
@@ -137,28 +139,28 @@ const WithdrawalPage = () => {
         </div>
       )}
 
-      {modal === "open" && (
+      {modal && (
         <CreateWithdrawal
-          onClose={() => setModal(null)}
-          open='open'
+          onClose={() => setModal(false)}
+          open={modal}
           token={token ?? ''}
         />
       )}
 
-      {modal === "edit" && selectedItem && (
+      {openUpdate&& selectedItem && (
         <EditWithdrawal
           withdrawal={selectedItem}
-          onClose={() => setModal(null)}
-          open='edit'
+          onClose={() => setModal(false)}
+          open={openUpdate}
           token={token ?? ""}
         />
       )}
 
-      {modal === "delete" && selectedItem && (
+      {openDelete && selectedItem && (
         <DeleteWithdrawal
           withdrawal={selectedItem}
-          onClose={() => setModal(null)}
-          open='delete'
+          onClose={() => setModal(false)}
+          open={openDelete}
           token={token ?? ''}
         />
       )}

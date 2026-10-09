@@ -227,7 +227,7 @@ import { useToast } from "../../../components/customer-toast";
 import type { Role } from "../../../utils/types";
 
 type CreateUserProps = {
-  open: string;
+  open: boolean;
   onClose: () => void;
   roleItems: Role[];
 };

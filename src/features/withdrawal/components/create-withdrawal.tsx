@@ -20,7 +20,7 @@ type CreateWithdrawalProps = {
   token: string;
 };
 
-type WithdrawalFormData = {
+export type WithdrawalFormData = {
   amount: number;
   currency: string;
   beneficiary: string;

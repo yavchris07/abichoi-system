@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Expense } from "../../../utils/types";
+// import type { Expense } from "../../../utils/types";
 import { expenseApi } from "../api";
+import type { ExpenseFormData } from "../components/create-expense";
 
 export const useCreateExpense = (token: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (data: Expense) => expenseApi.create(data, token),
+    mutationFn: (data: ExpenseFormData) => expenseApi.create(data, token),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

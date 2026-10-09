@@ -1,10 +1,11 @@
 
 import type { Withdrawal} from "../../../utils/types";
+import type { WithdrawalFormData } from "../components/create-withdrawal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const withdrawalApi = {
-  create: async (data: Withdrawal, token: string) => {
+  create: async (data: WithdrawalFormData, token: string) => {
     const res = await fetch(`${API_URL}/cash-withdrawal/create`, {
       method: "POST",
       headers: {

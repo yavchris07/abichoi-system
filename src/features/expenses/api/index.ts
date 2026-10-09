@@ -1,9 +1,10 @@
 import type { Expense} from "../../../utils/types";
+import type { ExpenseFormData } from "../components/create-expense";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const expenseApi = {
-  create: async (data: Expense, token: string) => {
+  create: async (data: ExpenseFormData, token: string) => {
     const res = await fetch(`${API_URL}/expense/create`, {
       method: "POST",
       headers: {

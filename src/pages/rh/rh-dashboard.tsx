@@ -77,6 +77,8 @@ const RHDashboard = ({ token }: RHDashboardProps) => {
    * GET /api/rh/dashboard/
    */
 
+  console.log(token)
+
   const stats: RHStats = {
     employees: 48,
     newEmployees: 2,
@@ -207,13 +209,13 @@ const RHDashboard = ({ token }: RHDashboardProps) => {
     1
   );
 
-  const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat("fr-FR", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(date));
-  };
+  // const formatDate = (date: string) => {
+  //   return new Intl.DateTimeFormat("fr-FR", {
+  //     day: "2-digit",
+  //     month: "short",
+  //     year: "numeric",
+  //   }).format(new Date(date));
+  // };
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900">
@@ -868,9 +870,9 @@ const LeaveRequestItem = ({ request }: LeaveRequestItemProps) => {
           {request.type} · {request.department}
         </p>
 
-        <p className="mt-1 text-[11px] text-zinc-400">
-          {request.startDate} → {request.endDate}
-        </p>
+        {/* <p className="mt-1 text-[11px] text-zinc-400">
+          {formrequest.startDate} → {request.endDate}
+        </p> */}
       </div>
 
       <ChevronRight
