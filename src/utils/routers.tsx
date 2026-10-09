@@ -1,10 +1,9 @@
-import LogPage from "../pages/admin/log";
+import LogPage from "../pages/admin/error-log";
 import RolePage from "../pages/admin/role";
 import SessionPage from "../pages/admin/session";
 import UserPage from "../pages/admin/user";
 import DashboardPage from "../pages/dashboard";
 import CashMovementPage from "../pages/finance/cash-movement";
-// import CashRegisterPage from "../pages/finance/cash-register";
 import DepositPage from "../pages/finance/deposit";
 import ExpensePage from "../pages/finance/expense";
 import ReportPage from "../pages/finance/reports";

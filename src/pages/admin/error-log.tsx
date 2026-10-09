@@ -1,9 +1,9 @@
 import MainLayout from "../../components/main-layout";
-import LogsList from "../../features/logs/components/logs-list";
-import { useLogs } from "../../features/logs/hooks/use-logs";
+import LogsList from "../../features/error-logs/components/logs-list";
+import { useLogs } from "../../features/error-logs/hooks/use-logs";
 import { getToken } from "../../utils/get-token";
 
-const LogPage = () => {
+const ErrorLogPage = () => {
   const token = getToken();
   const { data: logs, isLoading, isError } = useLogs(token ?? "");
   console.log("LOGS", logs);
@@ -19,4 +19,4 @@ const LogPage = () => {
   );
 };
 
-export default LogPage;
+export default ErrorLogPage;
